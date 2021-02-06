@@ -1,0 +1,7 @@
+---
+- name: Provision Server
+  become: true
+  hosts: all
+  roles:
+    - base
+    - edgerouter

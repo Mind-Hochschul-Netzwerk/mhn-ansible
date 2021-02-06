@@ -1,0 +1,43 @@
+---
+- name: Set timezone
+  community.general.timezone:
+    name: "{{ TIME_ZONE }}"
+
+- name: Update all packages to their latest version
+  apt:
+    name: "*"
+    update_cache: yes
+    cache_valid_time: 600
+    state: latest
+
+- name: Install Apt Packages
+  apt:
+    pkg:
+      - jq
+      - net-tools
+
+- name: ensure Pip Packages installed
+  import_role:
+    name: geerlingguy.pip
+  vars:
+    pip_install_packages:
+      - name: docker
+      - name: docker-compose
+      - name: jsondiff
+      - name: pyyaml
+
+- name: ensure Docker Installed
+  import_role:
+    name: geerlingguy.docker
+  vars:
+    docker_install_compose: no #causes timeout in gerlingguy role
+
+- name: add a vm.overcommit_memory setting at the end of the sysctl.conf #For Redis
+  sysctl:
+    name: vm.overcommit_memory
+    value: "1"
+    state: present
+    reload: yes
+
+- name: Flush handlers
+  meta: flush_handlers

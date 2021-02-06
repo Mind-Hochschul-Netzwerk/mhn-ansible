@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+- import_playbook: ../../main.yml
+  vars:
+    docker_users:
+      - vagrant
+    # prune_docker: true
+    DOMAINNAME: maclab.lan

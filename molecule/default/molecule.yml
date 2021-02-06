@@ -1,0 +1,36 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+    # requirements-file: requirements-collections.yml
+    force: false
+    # ignore-errors: ${GALAXY_IGNORE_ERRORS:-true}
+
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+
+platforms:
+  - name: ubuntu
+    box: ubuntu/focal64 # Other VMs seem to download very slow in Germany
+    memory: 2048
+    cpus: 2
+    interfaces:
+      - network_name: forwarded_port
+        guest: 80
+        host: 8080
+      - network_name: forwarded_port
+        guest: 443
+        host: 8043
+
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  black .

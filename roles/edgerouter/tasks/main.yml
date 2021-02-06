@@ -1,0 +1,2 @@
+- name: Import Traefik Stack
+  import_tasks: traefik_stack.yml

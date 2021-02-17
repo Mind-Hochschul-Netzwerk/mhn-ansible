@@ -4,4 +4,6 @@
   hosts: all
   roles:
     - base
+    - lockdown
     - edgerouter
+    - mailu

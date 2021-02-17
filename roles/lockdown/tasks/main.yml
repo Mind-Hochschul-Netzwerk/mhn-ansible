@@ -1,0 +1,11 @@
+---
+- name: Update apt cache & Install Tools
+  package:
+    name: ufw
+    state: latest
+
+- name: Lockdown SSH
+  include_tasks: ssh_lockdown.yml
+
+- name: flush handlers
+  meta: flush_handlers

@@ -9,3 +9,4 @@
       - vagrant
     # prune_docker: true
     DOMAINNAME: localhost
+    EDGE_Network_Name: edge

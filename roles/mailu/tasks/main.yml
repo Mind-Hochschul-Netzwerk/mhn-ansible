@@ -10,6 +10,7 @@
   git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/mailu.git
     dest: "{{ stack_folder }}"
+    version: dev
 
 # Ensure Folders
 - name: " Create Folders"
@@ -25,10 +26,15 @@
     - "{{ stack_volume_folder }}/mailu/mail/"
     - "{{ stack_volume_folder }}/mailu/filter/"
 
-- name: " Template docker .env"
+- name: " Template mailu .env"
   ansible.builtin.template:
     src: "config.env.j2"
     dest: "{{ stack_folder }}/config.env"
+
+- name: " Template docker .env"
+  ansible.builtin.template:
+    src: ".env.j2"
+    dest: "{{ stack_folder }}/.env"
 
 ## Deploy Stack
 - name: " Create and start Stack"

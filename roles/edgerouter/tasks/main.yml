@@ -13,6 +13,7 @@
 - name: Clone Repo
   git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/traefik.git
+    version: dev
     dest: "{{ stack_folder }}"
 
 # Ensure Folders

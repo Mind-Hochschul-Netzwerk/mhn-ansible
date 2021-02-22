@@ -8,5 +8,5 @@
     docker_users:
       - vagrant
     # prune_docker: true
-    DOMAINNAME: localhost
+    DOMAINNAME: mhn.localhost
     EDGE_Network_Name: edge

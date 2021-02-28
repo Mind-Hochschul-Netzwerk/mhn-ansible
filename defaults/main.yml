@@ -1,1 +1,2 @@
-DOMAINNAME=localhost
+---
+DOMAINNAME: localhost

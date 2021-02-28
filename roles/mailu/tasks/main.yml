@@ -1,8 +1,12 @@
-- name: " Set Stack Folder"
+- name: "Set Stack Name"
   ansible.builtin.set_fact:
-    stack_folder: "/opt/mailu"
+    stack_name: "mailu"
 
-- name: " Set Stack Volume Folder"
+- name: "Set Stack Folder"
+  ansible.builtin.set_fact:
+    stack_folder: "/opt/{{ stack_name }}"
+
+- name: "Set Stack Volume Folder"
   ansible.builtin.set_fact:
     stack_volume_folder: "{{ stack_folder }}/volumes"
 
@@ -13,7 +17,7 @@
     version: dev
 
 # Ensure Folders
-- name: " Create Folders"
+- name: "Create Folders"
   ansible.builtin.file:
     path: "{{ item }}/"
     state: directory
@@ -26,19 +30,19 @@
     - "{{ stack_volume_folder }}/mailu/mail/"
     - "{{ stack_volume_folder }}/mailu/filter/"
 
-- name: " Template mailu .env"
+- name: "Template mailu .env"
   ansible.builtin.template:
     src: "config.env.j2"
     dest: "{{ stack_folder }}/config.env"
 
-- name: " Template docker .env"
+- name: "Template docker .env"
   ansible.builtin.template:
     src: ".env.j2"
     dest: "{{ stack_folder }}/.env"
 
 ## Deploy Stack
-- name: " Create and start Stack"
+- name: "Create and start Stack"
   community.general.docker_compose:
     state: present
-    project_name: "mailu"
+    project_name: "{{ stack_name }}"
     project_src: "{{ stack_folder }}"

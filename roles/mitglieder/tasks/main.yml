@@ -1,0 +1,35 @@
+---
+- name: "Set Stack Name"
+  ansible.builtin.set_fact:
+    stack_name: "mitglieder"
+
+- name: "Set Stack Folder"
+  ansible.builtin.set_fact:
+    stack_folder: "/opt/{{ stack_name }}"
+
+- name: "Set Stack Volume Folder"
+  ansible.builtin.set_fact:
+    stack_volume_folder: "{{ stack_folder }}/volumes"
+
+- name: "Clone Repo"
+  git:
+    repo: https://github.com/Mind-Hochschul-Netzwerk/mitglieder.git
+    dest: "{{ stack_folder }}"
+
+# Ensure Folders
+- name: "Create Folders"
+  ansible.builtin.file:
+    path: "{{ item }}/"
+    state: directory
+  loop:
+    - "{{ stack_volume_folder }}"
+
+- name: "Template docker .env"
+  ansible.builtin.template:
+    src: ".env.j2"
+    dest: "{{ stack_folder }}/.env"
+
+- name: Deploy Stack
+  community.general.make:
+    chdir: "{{ stack_folder }}"
+    target: dev

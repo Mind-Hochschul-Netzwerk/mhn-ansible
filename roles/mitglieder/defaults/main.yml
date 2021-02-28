@@ -1,0 +1,6 @@
+---
+LDAP_PASSWD: ADMIN
+MYSQL_PASSWD: password
+MYSQL_ROOT_PASSWD: root
+AUFNAHME_SECRET: secret
+TOKEN_KEY: secret

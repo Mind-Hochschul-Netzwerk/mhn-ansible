@@ -15,7 +15,7 @@
   git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/aufnahme.git
     dest: "{{ stack_folder }}"
-    version: main
+    version: dev
 
 # Ensure Folders
 - name: "Create Folders"

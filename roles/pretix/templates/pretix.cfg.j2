@@ -1,0 +1,33 @@
+[pretix]
+instance_name=pretix.{{ DOMMAINNAME }}
+url=https://pretix.{{ DOMMAINNAME }}
+currency=EUR
+datadir=/data
+registration=off
+trust_x_forwarded_for=on
+trust_x_forwarded_proto=on
+
+[locale]
+default=de
+timezone=Europe/Berlin
+
+[database]
+backend=postgresql
+name={{ pretix_postgres_db }}
+user={{ pretix_postgres_user }}
+password={{ pretix_postgres_pw }}
+host=database
+
+[mail]
+; See config file documentation for more options
+from=tickets@{{ DOMMAINNAME }}
+host=smtp
+
+
+[redis]
+location=redis://redis/0
+sessions=true
+
+[celery]
+backend=redis://redis/1
+broker=redis://redis/2

@@ -1,0 +1,42 @@
+- name: "Set Stack Name"
+  ansible.builtin.set_fact:
+    stack_name: "pretix"
+
+- name: "Set Stack Folder"
+  ansible.builtin.set_fact:
+    stack_folder: "/opt/{{ stack_name }}"
+
+- name: "Set Stack Volume Folder"
+  ansible.builtin.set_fact:
+    stack_volume_folder: "{{ stack_folder }}/volumes"
+
+- name: "Clone Repo"
+  git:
+    repo: https://github.com/Mind-Hochschul-Netzwerk/pretix.git
+    dest: "{{ stack_folder }}"
+    version: dev
+
+# Ensure Folders
+- name: "Create Folders"
+  ansible.builtin.file:
+    path: "{{ item }}/"
+    state: directory
+  loop:
+    - "{{ stack_volume_folder }}"
+
+- name: "Template docker .env"
+  ansible.builtin.template:
+    src: ".env.j2"
+    dest: "{{ stack_folder }}/.env"
+
+- name: "Template Pretix.cfg"
+  ansible.builtin.template:
+    src: "pretix.cfg.j2"
+    dest: "{{ stack_folder }}/pretix.cfg"
+
+## Deploy Stack
+- name: "Create and start Stack"
+  community.general.docker_compose:
+    state: present
+    project_name: "{{ stack_name }}"
+    project_src: "{{ stack_folder }}"

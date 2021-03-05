@@ -21,8 +21,11 @@
   ansible.builtin.file:
     path: "{{ item }}/"
     state: directory
+    owner: "15371"
+    group: "15371"
   loop:
-    - "{{ stack_volume_folder }}"
+    - "{{ stack_volume_folder }}/data/logs"
+    - "{{ stack_volume_folder }}/data/media"
 
 - name: "Template docker .env"
   ansible.builtin.template:

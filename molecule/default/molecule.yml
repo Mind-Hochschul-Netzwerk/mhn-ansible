@@ -15,7 +15,7 @@ driver:
 platforms:
   - name: mhn.local
     box: ubuntu/focal64 # Other VMs seem to download very slow in Germany
-    memory: 2048
+    memory: 3072
     cpus: 4
     interfaces:
       - network_name: forwarded_port

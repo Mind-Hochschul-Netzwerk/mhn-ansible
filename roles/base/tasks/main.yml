@@ -13,8 +13,8 @@
 - name: Install Apt Packages
   apt:
     pkg:
-      - jq
       - net-tools
+      - borgbackup
 
 - name: ensure Pip Packages installed
   import_role:

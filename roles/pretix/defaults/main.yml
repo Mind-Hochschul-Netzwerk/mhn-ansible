@@ -1,4 +1,2 @@
 ---
-pretix_postgres_pw: supersecret
-pretix_postgres_user: pretix
-pretix_postgres_db: pretix
+pretix_branch: master

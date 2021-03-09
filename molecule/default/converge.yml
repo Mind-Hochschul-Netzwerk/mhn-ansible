@@ -9,4 +9,44 @@
       - vagrant
     # prune_docker: true
     DOMAINNAME: mhn.localhost
-    EDGE_Network_Name: edge
+
+    traefik_branch: master
+    traefik_make_target: dev
+
+    mailu_branch: master
+    mailu_sitename: MHN Mailu
+    mailu_initial_admin_account: admin
+    mailu_initial_admin_password: secret
+    mailu_secret_key_16char: dqwdoivnwei0nera
+
+    ldap_branch: master
+    ldap_password: password
+    ldap_config_password: wohooo
+
+    pretix_branch: master
+    pretix_postgres_pw: supersecret
+    pretix_postgres_user: pretix
+    pretix_postgres_db: pretix
+
+    moodle_branch: master
+    moodle_mysql_password: password
+    moodle_mysql_root_password: root
+    moodle_mail_addr: moodle@mhn.e-nigma.xyz
+    moodle_mail_pw: admpass
+
+    mitglieder_branch: main
+    mitglieder_make_target: dev
+    mitglieder_mysql_password: supersecret
+    mitglieder_aufnahme_secret: secret
+    mitglieder_mysql_root_password: password
+    mitglieder_token_key: blah
+
+    aufnahme_branch: main
+    aufnahme_make_target: dev
+    aufnahme_mysql_password: secret
+    aufnahme_mysql_root_password: supersecret
+    aufnahme_token_Key: tooooken
+
+    account_branch: master
+    account_mysql_password: password
+    account_myswl_root_password: superpass

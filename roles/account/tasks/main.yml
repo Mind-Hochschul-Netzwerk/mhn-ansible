@@ -15,7 +15,7 @@
   git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/account.git
     dest: "{{ stack_folder }}"
-    version: dev
+    version: "{{ account_branch }}"
 
 # Ensure Folders
 - name: "Create Folders"

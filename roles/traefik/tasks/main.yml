@@ -18,7 +18,7 @@
 - name: Clone Repo
   git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/traefik.git
-    version: dev
+    version: "{{ traefik_branch }}"
     dest: "{{ stack_folder }}"
 
 # Ensure Folders
@@ -39,4 +39,4 @@
 - name: Deploy Stack
   community.general.make:
     chdir: "{{ stack_folder }}"
-    target: dev
+    target: "{{ traefik_make_target }}"

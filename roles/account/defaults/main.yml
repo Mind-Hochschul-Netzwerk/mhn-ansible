@@ -1,4 +1,2 @@
 ---
-LDAP_PASSWD: ADMIN
-MYSQL_PASSWD: password
-MYSQL_ROOT_PASSWD: root
+account_branch: master

@@ -1,3 +1,2 @@
 ---
-LDAP_PASSWD: ADMIN
-LDAP_CFG_PASSWD: config
+ldap_branch: master

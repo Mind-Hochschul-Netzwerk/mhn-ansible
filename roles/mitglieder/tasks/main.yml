@@ -15,7 +15,7 @@
   git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/mitglieder.git
     dest: "{{ stack_folder }}"
-    version: dev
+    version: "{{ mitglieder_branch }}"
 
 # Ensure Folders
 - name: "Create Folders"
@@ -33,4 +33,4 @@
 - name: Deploy Stack
   community.general.make:
     chdir: "{{ stack_folder }}"
-    target: dev
+    target: "{{ mitglieder_make_target }}"

@@ -1,5 +1,3 @@
 ---
-LDAP_PASSWD: ADMIN
-MYSQL_PASSWD: password
-MYSQL_ROOT_PASSWD: root
-TOKEN_KEY: secret
+aufnahme_branch: main
+aufnahme_make_target: dev

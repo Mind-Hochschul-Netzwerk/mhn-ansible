@@ -5,7 +5,7 @@
   roles:
     - base
     - lockdown
-    - edgerouter
+    - traefik
     - mailu
     - ldap
     - account

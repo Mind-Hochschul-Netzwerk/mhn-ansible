@@ -12,6 +12,7 @@ staging:
 
   mailu_branch: master
   mailu_sitename: MHN Mailu
+  mailu_subnet: 10.11.0.0/16
   mailu_initial_admin_account: admin
   mailu_initial_admin_password: secret
   mailu_secret_key_16char: dqwdoivnwei0nera

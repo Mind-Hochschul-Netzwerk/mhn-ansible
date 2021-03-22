@@ -1,0 +1,56 @@
+---
+- name: Update apt cache & Install Tools
+  package:
+    name: ufw
+    state: latest
+
+- name: Allow everything and enable UFW
+  community.general.ufw:
+    state: enabled
+
+- name: Set SSH limiting in UFW
+  community.general.ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+  notify: restart ufw
+
+- name: Allow TCP Ports
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop:
+    - "80"
+    - "443"
+    - "4443"
+  notify: restart ufw
+
+- name: Allow UDP Ports
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: udp
+  loop:
+    - "10000"
+    - "20000:20050"
+  notify: restart ufw
+
+- name: Allow Other Ports
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+  loop:
+    - "25"
+    - "587"
+    - "465"
+    - "110"
+    - "995"
+    - "143"
+    - "993"
+  notify: restart ufw
+
+- name: Deny Other Ports
+  community.general.ufw:
+    policy: deny
+  notify: restart ufw

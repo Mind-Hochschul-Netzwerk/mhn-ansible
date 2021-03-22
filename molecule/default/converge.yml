@@ -18,12 +18,13 @@
     mailu_initial_admin_account: admin
     mailu_initial_admin_password: secret
     mailu_secret_key_16char: dqwdoivnwei0nera
+    mailu_subnet: 10.11.0.0/16
 
     ldap_branch: master
     ldap_password: password
     ldap_config_password: wohooo
 
-    pretix_branch: master
+    pretix_branch: main
     pretix_postgres_pw: supersecret
     pretix_postgres_user: pretix
     pretix_postgres_db: pretix

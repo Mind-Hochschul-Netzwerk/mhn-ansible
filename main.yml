@@ -8,8 +8,8 @@
     - traefik
     - mailu
     - ldap
-    - account
+    # - account
     - moodle
     - mitglieder
     - aufnahme
-    #- pretix
+    - pretix

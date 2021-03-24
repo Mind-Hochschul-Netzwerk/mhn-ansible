@@ -19,3 +19,10 @@ molecule converge # (Will Create a VM and provision everything against it)
 
 When you setup a wildcard DNS entry for localhost using for example `dnsmasq`, you can use [forwardports.sh](molecule/default/forwardports.sh).
 To forward the VM HTTP/HTTPS Ports to localhost `80` and `443`.
+
+## When using Local Ansible installation (not in Pipenv)
+
+It may be required to manually install the required role collections:
+```shell
+ansible-galaxy install -r requirements.yml
+```

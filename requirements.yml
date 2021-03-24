@@ -1,2 +1,9 @@
-- geerlingguy.docker
-- geerlingguy.pip
+roles:
+  # Install a role from Ansible Galaxy.
+  - geerlingguy.docker
+  - geerlingguy.pip
+
+collections:
+  # Install a collection from Ansible Galaxy.
+  - community.docker
+  - community.general

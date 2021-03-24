@@ -42,7 +42,7 @@
 
 ## Deploy Stack
 - name: "Create and start Stack"
-  community.general.docker_compose:
+  community.docker.docker_compose:
     state: present
     pull: yes
     project_name: "{{ stack_name }}"

@@ -22,7 +22,8 @@ To forward the VM HTTP/HTTPS Ports to localhost `80` and `443`.
 
 ## When using Local Ansible installation (not in Pipenv)
 
-It may be required to manually install the required role collections:
+It may be required to manually install the required ansible roles and collections:
+
 ```shell
 ansible-galaxy install -r requirements.yml
 ```

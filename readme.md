@@ -5,18 +5,18 @@
 
 ## Development
 
-All python dependencies can be installed using [pipenv](https://pypi.org/project/pipenv/).
+If you dont already have Ansible isntalled.
+Python dependencies can be installed using [Pipenv](https://pypi.org/project/pipenv/).
 
-For local testing, you can use [vagrant](https://www.vagrantup.com/) with [Ansible-Molecule](https://molecule.readthedocs.io/en/latest/) to create a local VM and provision it.
+For local testing, you can use [Vagrant](https://www.vagrantup.com/) with [Ansible-Molecule](https://molecule.readthedocs.io/en/latest/) to create a local VM and provision it.
 
 ```bash
-python3 -m pip install pipenv #Ensure Pipenv installed
-
-pipenv install #Install Python packages into Venv
-
-pipenv shell #Switch to Venv shell
-
-molecule converge #Will Create a local VM and provision everything against it
+# Prerequisites:
+python3 -m pip install pipenv # Ensure Pipenv installed
+pipenv install # Install Python packages into Venv
+# Usage:
+pipenv shell # Switch to Venv shell
+molecule converge # Will Create a local VM and provision everything against it
 ```
 
 ### Ansible Role Requirements
@@ -29,8 +29,7 @@ ansible-galaxy install -r requirements.yml
 
 ### Local Port forwarding
 
-When you setup a wildcard DNS entry for localhost using for example `dnsmasq`, you can use [forwardports.sh](molecule/default/forwardports.sh).
-To forward the VM HTTP/HTTPS Ports to localhost `80` and `443`.
+When you setup a wildcard DNS entry for localhost using for example [dnsmasq](https://thekelleys.org.uk/dnsmasq/doc.html), you can use [forwardports.sh](molecule/default/forwardports.sh) to forward the VM HTTP/HTTPS ( `8080/8043` ) ports to localhost `80` and `443`.
 
 ## Deploy to remote machine
 
@@ -43,6 +42,10 @@ ansible-playbook main.yml -i inventory.yml --skip-tags update # Skip certain par
 
 ### Available Tags
 
-- `update` -> Updates all APT packages to Latest
-- `lockdown` -> Lockdown Role
-- `base` -> Base Install and Update Role
+Some parts of the process can be selected using [Ansible-Tags](https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html).
+
+Tag | Effect
+---|----
+`base` | Base Install and Update Role
+`update` | Updates all APT packages to Latest
+`lockdown` | Lockdown Role

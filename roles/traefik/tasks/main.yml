@@ -11,9 +11,9 @@
   ansible.builtin.set_fact:
     stack_volume_folder: "{{ stack_folder }}/volumes"
 
-- name: "Set Traefik ACME Dir"
+- name: "Set Traefik ACME Dir" # Needs to mirror /acme/ path from Traefik Stack
   ansible.builtin.set_fact:
-    traefik_acme_dir: "{{ stack_volume_folder }}/traefik/acme/"
+    traefik_acme_dir: "{{ stack_volume_folder }}/acme/"
 
 - name: Clone Repo
   git:

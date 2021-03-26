@@ -7,10 +7,12 @@ all:
       docker_users:
         - "{{ ansible_user }}"
 
-      DOMAINNAME: mhn.e-nigma.xyz
+      DOMAINNAME: mhn.localhost
 
       traefik_branch: master
       traefik_make_target: dev
+      traefik_cert_mail: kontakt@mhn.localhost
+      traefik_ca_server: https://acme-staging-v02.api.letsencrypt.org/directory
 
       mailu_branch: master
       mailu_sitename: MHN Mailu

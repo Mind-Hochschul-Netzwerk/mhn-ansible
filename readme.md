@@ -35,9 +35,11 @@ When you setup a wildcard DNS entry for localhost using for example [dnsmasq](ht
 
 First make sure you have your `Inventory.yml` ready. See example: [inventory.sample.yml](inventory.sample.yml)
 
+Here are some examples on how to run the playbook:
+
 ```bash
-ansible-playbook main.yml -i inventory.yml --extra-vars "ansible_sudo_pass=UserSudoPassword" # To work pass a Sudo password.
-ansible-playbook main.yml -i inventory.yml --skip-tags update # Skip certain parts of he Process
+ansible-playbook main.yml -i inventory.yml --extra-vars "ansible_sudo_pass=UserSudoPassword" # Run playbook and pass sudo password
+ansible-playbook main.yml -i inventory.yml --skip-tags update # Run playbook skip certain parts of he Process
 ```
 
 ### Available Tags

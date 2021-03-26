@@ -9,6 +9,8 @@
     update_cache: yes
     cache_valid_time: 600
     state: latest
+  tags:
+    - update
 
 - name: Install Apt Packages
   apt:

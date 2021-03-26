@@ -5,7 +5,7 @@ Ansible Playbook to Provision the MHN Infrastructure
 
 ## Development
 
-```shell
+```bash
 python3 -m pip install pipenv # Ensure Pipenv installed
 
 pipenv install # Install Python packages into Venv
@@ -20,10 +20,23 @@ molecule converge # (Will Create a VM and provision everything against it)
 When you setup a wildcard DNS entry for localhost using for example `dnsmasq`, you can use [forwardports.sh](molecule/default/forwardports.sh).
 To forward the VM HTTP/HTTPS Ports to localhost `80` and `443`.
 
-## When using Local Ansible installation (not in Pipenv)
+## Ansible Role Requirements
 
 It may be required to manually install the required ansible roles and collections:
 
-```shell
+```bash
 ansible-galaxy install -r requirements.yml
 ```
+
+## Deploy with inventory.
+
+First make sure you have your `Inventory.yml` ready. Example: [inventory.sample.yml](inventory.sample.yml)
+
+```bash
+ansible-playbook main.yml -i inventory.yml --extra-vars "ansible_sudo_pass=UserSudoPassword" # To work pass a Sudo password.
+ansible-playbook main.yml -i inventory.yml --skip-tags update # Skip APT Updates
+```
+
+### Available Tags
+
+- `update` -> Updates all APT packages to Latest

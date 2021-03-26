@@ -29,12 +29,14 @@
       - name: pyyaml
 
 - name: ensure Docker Installed
+
   import_role:
     name: geerlingguy.docker
   vars:
     docker_install_compose: no #causes timeout in gerlingguy role
 
 - name: add a vm.overcommit_memory setting at the end of the sysctl.conf #For Redis
+
   sysctl:
     name: vm.overcommit_memory
     value: "1"

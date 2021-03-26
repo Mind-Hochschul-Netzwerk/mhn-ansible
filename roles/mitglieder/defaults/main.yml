@@ -1,3 +1,4 @@
 ---
+stack_group: users
 mitglieder_make_target: dev
 mitglieder_branch: main

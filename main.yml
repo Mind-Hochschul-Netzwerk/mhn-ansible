@@ -1,10 +1,15 @@
 ---
 - name: Provision Server
-  become: true # Run as Root
   hosts: all
   roles:
-    - base
-    - lockdown
+    - role: base
+      become: true # Run as Root
+      tags:
+        - base
+    - role: lockdown
+      become: true # Run as Root
+      tags:
+        - lockdown
     - traefik
     - mailu
     - ldap

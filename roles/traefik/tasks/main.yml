@@ -11,6 +11,14 @@
   ansible.builtin.set_fact:
     stack_volume_folder: "{{ stack_folder }}/volumes"
 
+- name: "Ensure Stack Folder exists"
+  become: true
+  ansible.builtin.file:
+    path: "{{ stack_folder }}/"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ stack_group }}"
+
 - name: "Set Traefik ACME Dir" # Needs to mirror /acme/ path from Traefik Stack
   ansible.builtin.set_fact:
     traefik_acme_dir: "{{ stack_volume_folder }}/acme/"
@@ -23,13 +31,15 @@
 
 # Ensure Folders
 - name: "Create Folders"
+  become: true
   ansible.builtin.file:
     path: "{{ item }}/"
     state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ stack_group }}"
   loop:
     - "{{ traefik_acme_dir }}"
-    - "{{ stack_volume_folder }}/traefik/config/"
-    - "{{ stack_volume_folder }}/traefik/logs/"
+    - "{{ stack_volume_folder }}/logs/"
 
 - name: "Template docker .env"
   ansible.builtin.template:

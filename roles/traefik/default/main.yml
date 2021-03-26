@@ -1,5 +1,7 @@
 ---
+stack_group: users
 traefik_branch: master
 traefik_make_target: dev
 traefik_cert_mail: kontakt@{{ DOMAINNAME }}
 traefik_ca_server: https://acme-staging-v02.api.letsencrypt.org/directory
+traefik_log_level: INFO

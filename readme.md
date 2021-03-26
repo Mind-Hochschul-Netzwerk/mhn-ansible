@@ -40,3 +40,5 @@ ansible-playbook main.yml -i inventory.yml --skip-tags update # Skip APT Updates
 ### Available Tags
 
 - `update` -> Updates all APT packages to Latest
+- `lockdown` -> Lockdown Role
+- `base` -> Base Install and Update Role

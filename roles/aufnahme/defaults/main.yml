@@ -1,3 +1,4 @@
 ---
+stack_group: users
 aufnahme_branch: main
 aufnahme_make_target: dev

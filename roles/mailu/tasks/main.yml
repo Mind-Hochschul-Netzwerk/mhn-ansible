@@ -10,6 +10,14 @@
   ansible.builtin.set_fact:
     stack_volume_folder: "{{ stack_folder }}/volumes"
 
+- name: "Ensure Stack Folder exists"
+  become: true
+  ansible.builtin.file:
+    path: "{{ stack_folder }}/"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ stack_group }}"
+
 - name: Clone Repo
   git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/mailu.git
@@ -18,17 +26,20 @@
 
 # Ensure Folders
 - name: "Create Folders"
+  become: true
   ansible.builtin.file:
+    owner: "{{ ansible_user }}"
+    group: "{{ stack_group }}"
     path: "{{ item }}/"
     state: directory
   loop:
-    - "{{ stack_volume_folder }}/mailu/redis/"
-    - "{{ stack_volume_folder }}/mailu/certs/"
-    - "{{ stack_volume_folder }}/mailu/overrides/"
-    - "{{ stack_volume_folder }}/mailu/data/"
-    - "{{ stack_volume_folder }}/mailu/dkim/"
-    - "{{ stack_volume_folder }}/mailu/mail/"
-    - "{{ stack_volume_folder }}/mailu/filter/"
+    - "{{ stack_volume_folder }}/redis/"
+    - "{{ stack_volume_folder }}/certs/"
+    - "{{ stack_volume_folder }}/overrides/"
+    - "{{ stack_volume_folder }}/data/"
+    - "{{ stack_volume_folder }}/dkim/"
+    - "{{ stack_volume_folder }}/mail/"
+    - "{{ stack_volume_folder }}/filter/"
 
 - name: "Template mailu .env"
   ansible.builtin.template:

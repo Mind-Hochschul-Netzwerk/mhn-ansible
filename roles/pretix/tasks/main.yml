@@ -10,6 +10,15 @@
   ansible.builtin.set_fact:
     stack_volume_folder: "{{ stack_folder }}/volumes"
 
+
+- name: "Ensure Stack Folder exists"
+  become: true
+  ansible.builtin.file:
+    path: "{{ stack_folder }}/"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ stack_group }}"
+
 - name: "Clone Repo"
   git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/pretix.git
@@ -18,6 +27,7 @@
 
 # Ensure Folders
 - name: "Create Folders"
+  become: true
   ansible.builtin.file:
     path: "{{ item }}/"
     state: directory

@@ -1,3 +1,4 @@
 ---
+stack_group: users
 moodle_branch: master
 moodle_mail_addr: moodle@{{ DOMAINNAME }}

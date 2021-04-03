@@ -1,0 +1,5 @@
+{% for item in deploy_users %}
+{% if item.sudoers is defined %}
+{{ item.name }} {{ item.sudoers }}
+{% endif %}
+{% endfor %}

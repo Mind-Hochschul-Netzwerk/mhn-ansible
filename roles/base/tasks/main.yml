@@ -43,5 +43,9 @@
     state: present
     reload: yes
 
+- name: Include Users
+  include_tasks: users.yml
+  when: deploy_users is defined
+
 - name: Flush handlers
   meta: flush_handlers

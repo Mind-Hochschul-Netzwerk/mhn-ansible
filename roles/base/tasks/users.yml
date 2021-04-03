@@ -1,0 +1,26 @@
+---
+- name: "Add Users"
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    state: present
+    groups: "{{ item.groups }}"
+  loop: "{{ deploy_users }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Deploy Pubkey
+  ansible.posix.authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.pubkey }}"
+    state: present
+    exclusive: true
+  loop: "{{ deploy_users }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Allow specified Users to sudo
+  ansible.builtin.template:
+    src: sudoers.j2
+    dest: /etc/sudoers.d/sudoers
+    validate: "visudo -cf %s"
+    mode: 0440

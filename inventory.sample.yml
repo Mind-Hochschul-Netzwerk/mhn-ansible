@@ -11,7 +11,7 @@ all:
 
       deploy_users: # List of Users that Should be deployed
         - name: joshua
-          sudoers: "ALL=(ALL:ALL) NOPASSWD:ALL"
+          sudoers: "ALL=(ALL:ALL) NOPASSWD:ALL" # Optional
           groups:
             - "docker"
           pubkey: | # Multiline String

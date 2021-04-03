@@ -2,7 +2,8 @@
 - name: Provision Server
   hosts: all
   roles:
-    - role: base
+    # Base Roles:
+    - role: dockerbase
       become: true # Run as Root
       tags:
         - base
@@ -10,10 +11,11 @@
       become: true # Run as Root
       tags:
         - lockdown
+
+    # Docker Stacks:
     - traefik
     - mailu
     - ldap
-    # - account
     - moodle
     - mitglieder
     - aufnahme

@@ -29,7 +29,6 @@
       - name: pyyaml
 
 - name: ensure Docker Installed
-
   import_role:
     name: geerlingguy.docker
   vars:

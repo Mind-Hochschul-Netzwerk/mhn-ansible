@@ -8,12 +8,12 @@
 - name: Template Backup Script
   ansible.builtin.template:
     src: borg-backup.j2
-    dest: /usr/local/sbin/borg-backup
+    dest: /usr/local/sbin/borg-backup --cron
 
 - name: Template Prune Script
   ansible.builtin.template:
     src: borg-prune.j2
-    dest: /usr/local/sbin/borg-prune
+    dest: /usr/local/sbin/borg-prune --cron
 
 - name: Template Borg Config
   ansible.builtin.template:

@@ -12,12 +12,6 @@
   tags:
     - update
 
-- name: Install Apt Packages
-  apt:
-    pkg:
-      - net-tools
-      - borgbackup
-
 - name: ensure Pip Packages installed
   import_role:
     name: geerlingguy.pip

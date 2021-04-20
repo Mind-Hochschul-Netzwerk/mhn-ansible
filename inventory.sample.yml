@@ -15,9 +15,19 @@ all:
           pubkey: | # Multiline String
             ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDFRO4P19iSWh3sIsm0VSgBqWs1w9BjUPjZHq0obQoHvDqwNEk3ML/SwATnkbjZe7r+9se+4px8XDY7BJLi/hA3XdzJOQoNOOdCvhVMO+pcVntfCp/zr2I9nt6aiU/c3zhmBdB/LuwwC8iU5DE7YeedJzkYBQLYux6Ypwmx/g+4ZvfD98+sudvqZMsH0a/PA2cfnPYGyAU29pi1eiYb3Lk/ZI4XXPOADSoKnQJzjWAHFMPGwoiUkL7+zvj6qQjh9O58+UavMtgHzAqPrWx1ZqOh9S5LFBAWdiPL7lkAgmUUI1yyrzJIHsqs3v08n1QQ+zXkc7xYRmHr6C92iRbwVpJLZH7GkwbGKXovszxJFeOkprD2P1D9o9dsi+xZnFC5usliTsKa2Pxv6jE/QlF9S7KdLoQcl8QKNZExJ9/svnDnkcX1HohPSrqg4Q4muv3ScSBMh6TZuwsZySNW6DCEfAiu9F36SIpbgAx3I4O5jpGFNBBSmm0FGbjsAE3VnCdJprM= yoshi@DESKTOP-Q4PV4UN
 
+      borg_backup_target: ssh://backupuser@localhost:22/./borg/{{ ansible_hostname }}
+      borg_backup_passphrase: superdupersecret
+      borg_backup_ssh_key: |
+        -----BEGIN OPENSSH PRIVATE KEY-----
+        b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAAwefweMwAAAAtzc2gtZW
+        ...
+        ...
+        3FmH8RYhZxFI8a03HSCXAAAAB3RnQHZlZ2EBAgMEBQY=
+        -----END OPENSSH PRIVATE KEY-----
+
       traefik_branch: master
       traefik_make_target: dev
-      traefik_cert_mail: kontakt@mhn.localhost
+      traefik_cert_mail: kontakt@{{ DOMAINNAME }}
       traefik_ca_server: https://acme-staging-v02.api.letsencrypt.org/directory
 
       mailu_branch: master
@@ -39,7 +49,7 @@ all:
       moodle_branch: master
       moodle_mysql_password: password
       moodle_mysql_root_password: root
-      moodle_mail_addr: moodle@mhn.e-nigma.xyz
+      moodle_mail_addr: moodle@{{ DOMAINNAME }}
       moodle_mail_pw: admpass
 
       mitglieder_branch: main

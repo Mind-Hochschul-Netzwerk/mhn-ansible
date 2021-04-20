@@ -12,6 +12,11 @@
       tags:
         - lockdown
 
+    - role: backup
+      become: true # Run as Root
+      tags:
+        - backup
+
     # Docker Stacks:
     - traefik
     - mailu

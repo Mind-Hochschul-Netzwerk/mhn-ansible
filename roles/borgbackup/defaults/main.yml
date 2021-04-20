@@ -1,0 +1,10 @@
+---
+borg_backup_target: ssh://backupuser@localhost:22/./borg/{{ ansible_hostname }}
+borg_backup_passphrase: superdupersecret
+borg_backup_ssh_key: |
+  -----BEGIN OPENSSH PRIVATE KEY-----
+  b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAAwefweMwAAAAtzc2gtZW
+  ...
+  ...
+  3FmH8RYhZxFI8a03HSCXAAAAB3RnQHZlZ2EBAgMEBQY=
+  -----END OPENSSH PRIVATE KEY-----

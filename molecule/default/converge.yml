@@ -42,7 +42,7 @@
     moodle_branch: master
     moodle_mysql_password: password
     moodle_mysql_root_password: root
-    moodle_mail_addr: moodle@mhn.e-nigma.xyz
+    moodle_mail_addr: moodle@{{ DOMAINNAME }}
     moodle_mail_pw: admpass
 
     mitglieder_branch: main

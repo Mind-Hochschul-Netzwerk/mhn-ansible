@@ -39,7 +39,7 @@ Here are some examples on how to run the playbook:
 
 ```bash
 ansible-playbook main.yml -i inventory.yml --extra-vars "ansible_sudo_pass=UserSudoPassword" # Run playbook and pass sudo password
-ansible-playbook main.yml -i inventory.yml --skip-tags update # Run playbook skip certain parts of he Process
+ansible-playbook main.yml -i inventory.yml --skip-tags "update,backup" # Run playbook skip certain parts of he Process
 ```
 
 ### Available Tags
@@ -51,3 +51,4 @@ Tag | Effect
 `base` | Base Install and Update Role
 `update` | Updates all APT packages to Latest
 `lockdown` | Lockdown Role
+`backup` | Bakcup Role

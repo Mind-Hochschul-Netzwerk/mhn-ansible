@@ -3,6 +3,10 @@
   community.general.timezone:
     name: "{{ TIME_ZONE }}"
 
+- name: Set Hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname  }}"
+
 - name: Update all packages to their latest version
   apt:
     name: "*"

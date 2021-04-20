@@ -9,7 +9,7 @@
 
 - name: "Set Stack Volume Folder"
   ansible.builtin.set_fact:
-    stack_volume_folder: "{{ stack_folder }}/volumes"
+    stack_volume_folder: "/srv/{{ stack_name }}"
 
 - name: "Ensure Stack Folder exists"
   become: true

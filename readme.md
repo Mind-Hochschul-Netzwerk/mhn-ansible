@@ -50,5 +50,5 @@ Tag | Effect
 ---|----
 `base` | Base Install and Update Role
 `update` | Updates all APT packages to Latest
-`lockdown` | Lockdown Role
-`backup` | Bakcup Role
+`lockdown` | Lockdown Role (Lockdown Settings)
+`backup` | Backup Role (Installs & configures Borgbackup)

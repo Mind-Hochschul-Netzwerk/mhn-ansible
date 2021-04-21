@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+. /etc/borg/config
+
+nice borg check --verbose {{ borg_backup_target }}

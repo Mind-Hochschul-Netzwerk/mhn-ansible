@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+. /etc/borg/config
+
+borg list --verbose {{ borg_backup_target }}

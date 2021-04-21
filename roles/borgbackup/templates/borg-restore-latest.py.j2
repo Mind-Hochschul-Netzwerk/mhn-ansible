@@ -1,0 +1,21 @@
+#!/bin/python3
+
+# -*- mode: python -*-
+# vi: set ft=python :
+
+import subprocess
+import json
+import pprint
+
+def main():
+  borg_repo = "{{ borg_backup_target }}"
+  borg_proc = os.system(f". /etc/borg/config; borg list --json {borg_repo}")
+
+  if borg_proc.returncode == 0:
+    repo_list = json.loads(borg_proc.stdout.read().decode('utf-8'))
+    pprint.pprint(repo_list)
+  else:
+    print("BorgProc Returned with: " + borg_proc.returncode)
+
+if __name__ == "__main__":
+  main()

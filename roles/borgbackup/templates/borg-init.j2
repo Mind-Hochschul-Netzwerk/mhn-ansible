@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+. /etc/borg/config
+
+borg init --encryption=repokey {{ borg_backup_target }}

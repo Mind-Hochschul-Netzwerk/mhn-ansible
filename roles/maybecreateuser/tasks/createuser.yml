@@ -1,0 +1,30 @@
+---
+# When using this role from the maybecreateuser role, gather_facts must be
+# disabled at the playbook level to avoid initialization problems.
+# Ensure the facts are gathered now, since we need them.
+- name: "gather facts"
+  setup:
+    gather_subset: all
+
+- name: "create new user without a password"
+  register: newuser
+  become: true
+  user:
+    name: "{{ username }}"
+    create_home: yes
+    groups:
+      - sudo
+    state: present
+    shell: /bin/bash
+
+- name: Add authorized key
+  authorized_key:
+    user: "{{ username }}"
+    key: "{{ ansible_user_pubkeys }}"
+    exclusive: yes
+
+- name: Allow sudo for ansible
+  copy:
+    content: "{{ username }} ALL=(ALL) NOPASSWD: ALL"
+    dest: "/etc/sudoers.d/{{ username }}"
+    mode: 0600

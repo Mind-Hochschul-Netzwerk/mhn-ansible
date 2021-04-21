@@ -1,0 +1,35 @@
+---
+- name: "Register username var"
+  ansible.builtin.set_fact:
+    username: "{{ ansible_user }}"
+
+# Test if the original ansible_user can SSH in or not.
+# If not, assume we can SSH in with the initial_user
+# and setup the ansible_user.
+- name: Create new user if not exists
+  vars:
+    - ansible_user: "{{ initial_user | default('root') }}"
+  block:
+    - block:
+        - name: "Wait for Connection on Initial User {{ ansible_user }}"
+          wait_for_connection:
+            timeout: 2
+          no_log: true
+        - set_fact:
+            needs_init: true
+      rescue:
+        - set_fact:
+            needs_init: false
+
+    - name: Create new user
+      import_tasks: createuser.yml
+      failed_when: false
+      when: needs_init
+
+- name: "Remove Default user {{ initial_user }}"
+  user:
+    name: "{{ initial_user }}"
+    state: absent
+    remove: yes
+    force: true
+  when: initial_user != "root" and needs_init

@@ -17,6 +17,8 @@ platforms:
     box: ubuntu/focal64 # Other VMs seem to download very slow in Germany
     memory: 2048
     cpus: 2
+    provider_raw_config_args:
+      - "customize [ 'modifyvm', :id, '--uartmode1', 'disconnected' ]"
     interfaces:
       - network_name: forwarded_port
         guest: 80

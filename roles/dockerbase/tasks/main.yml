@@ -20,6 +20,7 @@
   ansible.builtin.package:
     name:
       - git
+      - build-essential
     state: latest
 
 - name: ensure Pip Packages installed
@@ -51,3 +52,6 @@
 
 - name: Flush handlers
   meta: flush_handlers
+
+- name: reset ssh connection # To enforce group changes
+  meta: reset_connection

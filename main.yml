@@ -22,7 +22,7 @@
       tags:
         - lockdown
 
-    - role: backup
+    - role: borgbackup
       become: true # Run as Root
       tags:
         - backup

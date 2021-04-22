@@ -16,6 +16,12 @@
   tags:
     - update
 
+- name: Install Packages
+  ansible.builtin.package:
+    name:
+      - git
+    state: latest
+
 - name: ensure Pip Packages installed
   import_role:
     name: geerlingguy.pip

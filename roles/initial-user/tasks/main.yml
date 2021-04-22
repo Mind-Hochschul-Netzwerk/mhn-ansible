@@ -26,18 +26,13 @@
       failed_when: false
       when: needs_init
 
-- name: Ensure Initial User is set
-  ansible.builtin.set_fact:
-    initial_user: root
-  when: initial_user is undefined
-
 - name: "Remove Default user {{ initial_user }}"
   user:
     name: "{{ initial_user }}"
     state: absent
     remove: yes
     force: true
-  when: initial_user != "root" and needs_init
+  when: initial_user | default('root') != "root" and needs_init
 
 - name: reset ssh connection
   meta: reset_connection

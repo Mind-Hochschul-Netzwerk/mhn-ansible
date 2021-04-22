@@ -4,6 +4,9 @@ all:
     testserver:
       ansible_host: 00.00.00.00
       ansible_user: deployer
+      docker_users:
+        - "{{ ansible_user }}"
+
       ansible_user_pubkeys: | # Multiline String
         ssh-rsa AAAAB3NzaC1kcX1HohPSrqg4Q4muv3ScSBMh6TZuwsZySNW6DCEfAiu9F36SIpbgAx3I4O5jpGFNBBSmm0FGbjsAE3VnCdJprM=yoshi@example
 

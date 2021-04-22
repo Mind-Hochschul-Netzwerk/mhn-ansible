@@ -5,16 +5,27 @@
       - borgbackup
     state: latest
 
+- name: Borg Config Folder
+  become: true
+  ansible.builtin.file:
+    path: "/etc/borg"
+    state: directory
+
 - name: Template Borg Config
   ansible.builtin.template:
     src: borg-config.j2
     dest: /etc/borg/config
-    mode: 0600
+    owner: "{{ ansible_user }}"
+    group: "root"
+    mode: 0660
 
 - name: Template Borg Scripts
   ansible.builtin.template:
     src: borg-{{ item }}.j2
     dest: /usr/local/sbin/borg-{{ item }}
+    owner: "{{ ansible_user }}"
+    group: "root"
+    mode: 0770
   loop:
     - check
     - init
@@ -26,11 +37,16 @@
   ansible.builtin.template:
     src: borg-restore-latest.py.j2
     dest: /usr/local/sbin/borg-restore-latest
+    owner: "{{ ansible_user }}"
+    group: "root"
+    mode: 0770
 
 - name: Add Borg Ssh PrivKey
   ansible.builtin.copy:
-    path: /root/.ssh/id_borg
+    dest: "/home/{{ ansible_user }}/.ssh/id_borg"
     content: "{{ borg_backup_ssh_key }}"
+    owner: "{{ ansible_user }}"
+    group: "root"
     mode: 0600
 # - name: Set Backup Cron Job
 #   ansible.builtin.cron:

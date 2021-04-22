@@ -5,9 +5,6 @@
   become: true
   roles:
     - maybecreateuser # gather_facts must be disabled here to use this role
-  tasks:
-    - name: reset ssh connection
-      meta: reset_connection
 
 - name: Provision Servers
   hosts: all

@@ -38,3 +38,6 @@
     remove: yes
     force: true
   when: initial_user != "root" and needs_init
+
+- name: reset ssh connection
+  meta: reset_connection

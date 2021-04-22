@@ -16,8 +16,6 @@
   ansible.builtin.file:
     path: "{{ stack_folder }}/"
     state: directory
-    owner: "{{ ansible_user }}"
-    group: "{{ stack_group }}"
 
 - name: "Set Traefik ACME Dir" # Needs to mirror /acme/ path from Traefik Stack
   ansible.builtin.set_fact:
@@ -35,8 +33,7 @@
   ansible.builtin.file:
     path: "{{ item }}/"
     state: directory
-    owner: "{{ ansible_user }}"
-    group: "{{ stack_group }}"
+
   loop:
     - "{{ traefik_acme_dir }}"
     - "{{ stack_volume_folder }}/logs/"

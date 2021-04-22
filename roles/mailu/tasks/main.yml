@@ -15,8 +15,6 @@
   ansible.builtin.file:
     path: "{{ stack_folder }}/"
     state: directory
-    owner: "{{ ansible_user }}"
-    group: "{{ stack_group }}"
 
 - name: Clone Repo
   git:
@@ -28,8 +26,6 @@
 - name: "Create Folders"
   become: true
   ansible.builtin.file:
-    owner: "{{ ansible_user }}"
-    group: "{{ stack_group }}"
     path: "{{ item }}/"
     state: directory
   loop:

@@ -16,8 +16,6 @@
   ansible.builtin.file:
     path: "{{ stack_folder }}/"
     state: directory
-    owner: "{{ ansible_user }}"
-    group: "{{ stack_group }}"
 
 - name: "Clone Repo"
   git:
@@ -30,8 +28,6 @@
   ansible.builtin.file:
     path: "{{ stack_volume_folder }}/"
     state: directory
-    owner: "{{ ansible_user }}"
-    group: "{{ stack_group }}"
 
 # Ensure Folders
 - name: "Create Folders"

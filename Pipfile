@@ -13,8 +13,5 @@ python-vagrant = "*"
 [dev-packages]
 black = "*"
 
-[requires]
-python_version = "3.8"
-
 [pipenv] # For Black
 allow_prereleases = true

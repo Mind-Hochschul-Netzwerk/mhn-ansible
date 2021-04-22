@@ -19,6 +19,14 @@
     group: "root"
     mode: 0660
 
+- name: Add Borg Ssh PrivKey
+  ansible.builtin.copy:
+    dest: "/home/{{ ansible_user }}/.ssh/id_borg"
+    content: "{{ borg_backup_ssh_key }}"
+    owner: "{{ ansible_user }}"
+    group: "root"
+    mode: 0600
+
 - name: Template Borg Scripts
   ansible.builtin.template:
     src: borg-{{ item }}.j2
@@ -32,32 +40,26 @@
     - backup
     - prune
     - list
+    - info
+    - mount
+    - restore-latest
 
-- name: Template Restore Script
-  ansible.builtin.template:
-    src: borg-restore-latest.py.j2
-    dest: /usr/local/sbin/borg-restore-latest
-    owner: "{{ ansible_user }}"
-    group: "root"
-    mode: 0770
+- name: Maybe restore latest
+  ansible.builtin.shell:
+    cmd: borg-restore-latest | tee /var/log/firstrestore.log
+  register: restorelatest
+  changed_when: "'is not Empty' not in restorelatest.stdout"
 
-- name: Add Borg Ssh PrivKey
-  ansible.builtin.copy:
-    dest: "/home/{{ ansible_user }}/.ssh/id_borg"
-    content: "{{ borg_backup_ssh_key }}"
-    owner: "{{ ansible_user }}"
-    group: "root"
-    mode: 0600
-# - name: Set Backup Cron Job
-#   ansible.builtin.cron:
-#     name: "Borg Backup"
-#     minute: "47"
-#     hour: "4"
-#     job: "/usr/local/sbin/borg-backup --cron"
+- name: Set Backup Cron Job
+  ansible.builtin.cron:
+    name: "Borg Backup"
+    minute: "47"
+    hour: "4"
+    job: "/usr/local/sbin/borg-backup --cron"
 
-# - name: Set Backup Prune Cron Job
-#   ansible.builtin.cron:
-#     name: "Borg Prune"
-#     minute: "37"
-#     hour: "2"
-#     job: "/usr/local/sbin/borg-prune --cron"
+- name: Set Backup Prune Cron Job
+  ansible.builtin.cron:
+    name: "Borg Prune"
+    minute: "37"
+    hour: "2"
+    job: "/usr/local/sbin/borg-prune --cron"

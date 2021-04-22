@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+. /etc/borg/config
+
+borg mount {{ borg_backup_target }}::$1 $2

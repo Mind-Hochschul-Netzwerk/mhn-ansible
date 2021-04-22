@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+. /etc/borg/config
+
+borgrepo="{{ borg_backup_target }}"
+borgpath="/srv"
+
+if [ "$(ls -A $borgpath)" ]; then
+    echo "$borgpath is not Empty"
+else
+    lastbackup=$(borg list --short --last 1 $borgrepo)
+    echo "Last backup:" $lastbackup
+    echo "Extracting... Extra Args: $1"
+    cd $borgpath; cd ..
+    sudo borg extract --list $1 $borgrepo::$lastbackup
+fi

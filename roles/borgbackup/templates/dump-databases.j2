@@ -19,7 +19,7 @@ for container in $CONTAINERS; do
     PASSWORD=$(grep MYSQL_ROOT_PASSWORD $CONTAINER_WORKING_DIR/.env)
     PASSWORD=${PASSWORD#*=}
 
-    CONTAINER_BACKUP_DIR="$BACKUP_DIR/$container#"
+    CONTAINER_BACKUP_DIR="$BACKUP_DIR/$container"
     mkdir -p "$CONTAINER_BACKUP_DIR"
 
     DATABASES=$(docker exec "$container" mysql --batch --skip-column-names --password="$PASSWORD" -e "SHOW DATABASES;")

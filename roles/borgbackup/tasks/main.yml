@@ -3,6 +3,7 @@
   ansible.builtin.package:
     name:
       - borgbackup
+      - jq
     state: latest
 
 - name: Borg Config Folder
@@ -29,20 +30,21 @@
 
 - name: Template Borg Scripts
   ansible.builtin.template:
-    src: borg-{{ item }}.j2
-    dest: /usr/local/sbin/borg-{{ item }}
+    src: "{{ item }}.j2"
+    dest: "/usr/local/sbin/{{ item }}"
     owner: "{{ ansible_user }}"
     group: "root"
     mode: 0770
   loop:
-    - check
-    - init
-    - backup
-    - prune
-    - list
-    - info
-    - mount
-    - restore-latest
+    - borg-check
+    - borg-init
+    - borg-backup
+    - borg-prune
+    - borg-list
+    - borg-info
+    - borg-mount
+    - borg-restore-latest
+    - dump-databases
 
 - name: Maybe restore latest
   ansible.builtin.shell:

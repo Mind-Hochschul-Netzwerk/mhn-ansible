@@ -1,0 +1,46 @@
+#!/bin/bash
+
+BACKUP_BASE_DIR=/srv/backup
+mkdir -p "$BACKUP_BASE_DIR"
+
+find $BACKUP_BASE_DIR -mindepth 1 -type d -ctime +7 -prune -exec rm -rf {} \;
+
+SELF_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+cd "$SELF_DIR/.."
+
+BACKUP_DIR="$BACKUP_BASE_DIR/$(date +%Y-%m-%d)/databases"
+{% raw %}
+CONTAINERS="$(docker ps -f ancestor=mariadb --format "{{.Names}}")"
+{% endraw %}
+
+for container in $CONTAINERS; do
+    CONTAINER_WORKING_DIR=$(docker inspect "$container" | jq -r '.[0].Config.Labels."com.docker.compose.project.working_dir"')
+
+    PASSWORD=$(grep MYSQL_ROOT_PASSWORD $CONTAINER_WORKING_DIR/.env)
+    PASSWORD=${PASSWORD#*=}
+
+    CONTAINER_BACKUP_DIR="$BACKUP_DIR/$container#"
+    mkdir -p "$CONTAINER_BACKUP_DIR"
+
+    DATABASES=$(docker exec "$container" mysql --batch --skip-column-names --password="$PASSWORD" -e "SHOW DATABASES;")
+    echo "exporting Database: $container -->" $DATABASES
+    for database in $DATABASES; do
+        docker exec "$container" mysqldump \
+            --default-character-set=utf8\
+            --password="$PASSWORD"\
+            --add-drop-database\
+            --add-drop-table\
+            --add-locks\
+            --complete-insert\
+            --databases\
+            --extended-insert\
+            --lock-all-tables\
+            --create-options\
+            --disable-keys\
+            --quick\
+            --order-by-primary\
+            --set-charset\
+            --tz-utc\
+        $database > "$CONTAINER_BACKUP_DIR/$database.sql"
+    done
+done

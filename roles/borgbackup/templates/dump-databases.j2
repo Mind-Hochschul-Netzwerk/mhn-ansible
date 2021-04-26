@@ -8,7 +8,7 @@ find $BACKUP_BASE_DIR -mindepth 1 -type d -ctime +7 -prune -exec rm -rf {} \;
 BACKUP_DIR="$BACKUP_BASE_DIR/$(date +%Y-%m-%d)/databases"
 
 {% raw %}
-CONTAINERS="$(docker ps -f ancestor=mariadb --format "{{.Names}}")"
+CONTAINERS="$(docker ps -f expose=3306 --format "{{.Names}}")"
 {% endraw %}
 
 for container in $CONTAINERS; do
@@ -21,7 +21,7 @@ for container in $CONTAINERS; do
     mkdir -p "$CONTAINER_BACKUP_DIR"
 
     DATABASES=$(docker exec "$container" mysql --batch --skip-column-names --password="$PASSWORD" -e "SHOW DATABASES;")
-    echo "exporting Database: $container -->" $DATABASES
+    echo "exporting mysql: $container -->" $DATABASES
     for database in $DATABASES; do
         docker exec "$container" mysqldump \
             --default-character-set=utf8\
@@ -45,7 +45,7 @@ done
 
 
 {% raw %}
-CONTAINERS="$(docker ps -f ancestor=postgres --format "{{.Names}}")"
+CONTAINERS="$(docker ps -f expose=5432 --format "{{.Names}}")"
 {% endraw %}
 
 for container in $CONTAINERS; do
@@ -60,7 +60,7 @@ for container in $CONTAINERS; do
     CONTAINER_BACKUP_DIR="$BACKUP_DIR/$container"
     mkdir -p "$CONTAINER_BACKUP_DIR"
 
-    echo "exporting Database: $container"
+    echo "exporting postgres: $container"
 
     docker exec -i -e PGPASSWORD="$POSTGRES_PW" $container pg_dumpall --user="$DBUSER" > "$CONTAINER_BACKUP_DIR/$database.sql"
 

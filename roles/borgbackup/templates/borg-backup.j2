@@ -10,5 +10,5 @@ fi
 
 export BORG_HOSTNAME_IS_UNIQUE=1
 
-nice ionice dump-databases
+nice ionice /usr/local/sbin/dump-databases
 nice ionice borg create --stats --verbose --exclude '/sys' --exclude '/proc' --exclude '/tmp' --exclude '/var/tmp' --exclude '/backup'  {{ borg_backup_target }}::`hostname`-`date +%Y-%m-%d.%H` '/srv'

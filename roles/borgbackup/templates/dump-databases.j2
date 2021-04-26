@@ -5,10 +5,8 @@ mkdir -p "$BACKUP_BASE_DIR"
 
 find $BACKUP_BASE_DIR -mindepth 1 -type d -ctime +7 -prune -exec rm -rf {} \;
 
-SELF_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-cd "$SELF_DIR/.."
-
 BACKUP_DIR="$BACKUP_BASE_DIR/$(date +%Y-%m-%d)/databases"
+
 {% raw %}
 CONTAINERS="$(docker ps -f ancestor=mariadb --format "{{.Names}}")"
 {% endraw %}

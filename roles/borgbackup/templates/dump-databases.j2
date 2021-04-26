@@ -44,3 +44,26 @@ for container in $CONTAINERS; do
         $database > "$CONTAINER_BACKUP_DIR/$database.sql"
     done
 done
+
+
+{% raw %}
+CONTAINERS="$(docker ps -f ancestor=postgres --format "{{.Names}}")"
+{% endraw %}
+
+for container in $CONTAINERS; do
+    CONTAINER_WORKING_DIR=$(docker inspect "$container" | jq -r '.[0].Config.Labels."com.docker.compose.project.working_dir"')
+
+    PASSWORD=$(grep POSTGRES_PW $CONTAINER_WORKING_DIR/.env)
+    PASSWORD=${PASSWORD#*=}
+
+    DBUSER=$(grep POSTGRES_USER $CONTAINER_WORKING_DIR/.env)
+    DBUSER=${DBUSER#*=}
+
+    CONTAINER_BACKUP_DIR="$BACKUP_DIR/$container"
+    mkdir -p "$CONTAINER_BACKUP_DIR"
+
+    echo "exporting Database: $container"
+
+    docker exec -i -e PGPASSWORD="$POSTGRES_PW" $container pg_dumpall --user="$DBUSER" > "$CONTAINER_BACKUP_DIR/$database.sql"
+
+done

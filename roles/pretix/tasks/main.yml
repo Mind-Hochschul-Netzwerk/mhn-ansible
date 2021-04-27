@@ -15,6 +15,7 @@
   ansible.builtin.file:
     path: "{{ stack_folder }}/"
     state: directory
+    owner: "{{ ansible_user }}"
 
 - name: "Clone Repo"
   git:
@@ -33,6 +34,8 @@
   loop:
     - "{{ stack_volume_folder }}/data/logs"
     - "{{ stack_volume_folder }}/data/media"
+  tags:
+    - stackvolumes
 
 - name: "Template docker .env"
   ansible.builtin.template:
@@ -51,3 +54,5 @@
     pull: yes
     project_name: "{{ stack_name }}"
     project_src: "{{ stack_folder }}"
+  tags:
+    - startstack

@@ -16,6 +16,7 @@
   ansible.builtin.file:
     path: "{{ stack_folder }}/"
     state: directory
+    owner: "{{ ansible_user }}"
 
 - name: "Clone Repo"
   git:
@@ -28,6 +29,8 @@
   ansible.builtin.file:
     path: "{{ stack_volume_folder }}/"
     state: directory
+  tags:
+    - stackvolumes
 
 - name: "Template docker .env"
   ansible.builtin.template:
@@ -38,3 +41,5 @@
   community.general.make:
     chdir: "{{ stack_folder }}"
     target: "{{ mitglieder_make_target }}"
+  tags:
+    - startstack

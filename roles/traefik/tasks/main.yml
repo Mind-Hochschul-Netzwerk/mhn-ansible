@@ -16,6 +16,7 @@
   ansible.builtin.file:
     path: "{{ stack_folder }}/"
     state: directory
+    owner: "{{ ansible_user }}"
 
 - name: "Set Traefik ACME Dir" # Needs to mirror /acme/ path from Traefik Stack
   ansible.builtin.set_fact:
@@ -33,10 +34,11 @@
   ansible.builtin.file:
     path: "{{ item }}/"
     state: directory
-
   loop:
     - "{{ traefik_acme_dir }}"
-    - "{{ stack_volume_folder }}/logs/"
+    - "{{ stack_volume_folder }}/log/"
+  tags:
+    - stackvolumes
 
 - name: "Template docker .env"
   ansible.builtin.template:
@@ -47,3 +49,5 @@
   community.general.make:
     chdir: "{{ stack_folder }}"
     target: "{{ traefik_make_target }}"
+  tags:
+    - startstack

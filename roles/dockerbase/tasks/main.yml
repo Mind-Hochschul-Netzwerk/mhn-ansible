@@ -7,6 +7,12 @@
   ansible.builtin.hostname:
     name: "{{ inventory_hostname  }}"
 
+- name: packages | ensure apt list dir exists
+  file:
+    path: /var/lib/apt/lists/
+    state: directory
+    mode: 0755
+
 - name: Update all packages to their latest version
   apt:
     name: "*"

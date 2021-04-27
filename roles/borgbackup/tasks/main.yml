@@ -46,11 +46,14 @@
     - borg-restore-latest
     - dump-databases
 
-- name: Maybe restore latest
-  ansible.builtin.shell:
-    cmd: borg-restore-latest | tee /var/log/firstrestore.log
-  register: restorelatest
-  changed_when: "'is not Empty' not in restorelatest.stdout"
+# Disabled for now, because the first Borg ssh connection usually fails the Fingerprint check
+# - name: Maybe restore latest
+#   ansible.builtin.shell:
+#     cmd: borg-restore-latest | tee -a /var/log/firstrestore.log
+#   register: restorelatest
+#   changed_when: "'is not Empty' not in restorelatest.stdout"
+#   tags:
+#     - restorelast
 
 - name: Set Backup Cron Job
   ansible.builtin.cron:

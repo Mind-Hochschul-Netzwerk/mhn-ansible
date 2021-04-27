@@ -10,7 +10,7 @@ if [ "$(ls -A $borgpath)" ]; then
 else
     lastbackup=$(borg list --short --last 1 $borgrepo)
     echo "Last backup:" $lastbackup
-    echo "Extracting... Extra Args: $1"
+    echo "$(date) Extracting... Extra Args: $1"
     cd $borgpath; cd ..
-    sudo borg extract --list $1 $borgrepo::$lastbackup
+    borg extract --list $1 $borgrepo::$lastbackup
 fi

@@ -8,22 +8,22 @@
 
 - name: Provision Servers
   hosts: all
+  become: true
   roles:
     # Base Roles:
     - role: dockerbase
-      become: true # Run as Root
       tags:
         - base
     - role: lockdown
-      become: true # Run as Root
       tags:
         - lockdown
-
     - role: borgbackup
-      become: true # Run as Root
       tags:
         - backup
 
+- name: Deploy Docker Stacks
+  hosts: all
+  roles:
     # Docker Stacks:
     - traefik
     - mailu

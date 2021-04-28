@@ -54,3 +54,4 @@ Some parts of the process can be selected using [Ansible-Tags](https://docs.ansi
 | `backup`       | Backup Role (Installs & configures Borgbackup) |
 | `startstack`   | Make or Docker-compose up commands             |
 | `stackvolumes` | Stack volume Creation                          |
+| `dockerstacks` | Only the Stack provisioning Play               |

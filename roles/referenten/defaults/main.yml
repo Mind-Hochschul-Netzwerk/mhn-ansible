@@ -1,0 +1,8 @@
+---
+referenten_branch: main
+referenten_make_target: dev
+referenten_mqsql_root_password: supersave
+referenten_mqsql_password: savepassword
+referenten_mail_pw: supersecret
+referenten_mail_addr: referenten@{{ DOMAINNAME }}
+referenten_from_mail: "{{ referenten_mail_addr }}"

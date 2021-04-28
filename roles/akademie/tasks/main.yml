@@ -1,0 +1,46 @@
+---
+- name: "Set Stack Name"
+  ansible.builtin.set_fact:
+    stack_name: "akademie"
+
+- name: "Set Stack Folder"
+  ansible.builtin.set_fact:
+    stack_folder: "/opt/{{ stack_name }}"
+
+- name: "Set Stack Volume Folder"
+  ansible.builtin.set_fact:
+    stack_volume_folder: "/srv/{{ stack_name }}"
+
+- name: "Ensure Stack Folder exists"
+  become: true
+  ansible.builtin.file:
+    path: "{{ stack_folder }}/"
+    state: directory
+    owner: "{{ ansible_user }}"
+
+- name: "Clone Repo"
+  git:
+    repo: https://github.com/Mind-Hochschul-Netzwerk/akademie.git
+    dest: "{{ stack_folder }}"
+    version: "{{ akademie_branch }}"
+
+- name: "Ensure Stack Volume Folder exists"
+  become: true
+  ansible.builtin.file:
+    path: "{{ stack_volume_folder }}/mariadb"
+    state: directory
+  tags:
+    - stackvolumes
+
+- name: "Template docker .env"
+  ansible.builtin.template:
+    src: ".env.j2"
+    dest: "{{ stack_folder }}/.env"
+
+## Deploy Stack
+- name: Deploy Stack
+  community.general.make:
+    chdir: "{{ stack_folder }}"
+    target: "{{ akademie_make_target }}"
+  tags:
+    - startstack

@@ -52,6 +52,7 @@ all:
       pretix_postgres_db: pretix
 
       moodle_branch: master
+      moodle_make_target: dev
       moodle_mysql_password: password
       moodle_mysql_root_password: root
       moodle_mail_addr: moodle@{{ DOMAINNAME }}
@@ -73,3 +74,13 @@ all:
       account_branch: master
       account_mysql_password: password
       account_myswl_root_password: superpass
+
+      referenten_branch: main
+      referenten_make_target: dev
+      referenten_mqsql_root_password: supersave
+      referenten_mqsql_password: savepassword
+      referenten_mail_addr: referenten@{{ DOMAINNAME }}
+      referenten_mail_pw: secret
+
+      akademie_make_target: prod
+      akademie_branch: main

@@ -84,3 +84,4 @@ all:
 
       akademie_make_target: prod
       akademie_branch: main
+      akademie_additional_host_rules: "|| Host(`alternative.org`) || Host(`alternative.com`)"

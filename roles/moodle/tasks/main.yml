@@ -1,3 +1,4 @@
+---
 - name: "Set Stack Name"
   ansible.builtin.set_fact:
     stack_name: "moodle"
@@ -37,11 +38,9 @@
     dest: "{{ stack_folder }}/.env"
 
 ## Deploy Stack
-- name: "Create and start Stack"
-  community.docker.docker_compose:
-    state: present
-    pull: yes
-    project_name: "{{ stack_name }}"
-    project_src: "{{ stack_folder }}"
+- name: Deploy Stack
+  community.general.make:
+    chdir: "{{ stack_folder }}"
+    target: "{{ moodle_make_target }}"
   tags:
     - startstack

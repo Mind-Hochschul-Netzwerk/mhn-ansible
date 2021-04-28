@@ -1,4 +1,4 @@
 ---
-stack_group: users
 moodle_branch: master
+moodle_make_target: dev
 moodle_mail_addr: moodle@{{ DOMAINNAME }}

@@ -1,4 +1,3 @@
-stack_group: users
 mailu_subnet: 10.11.0.0/16
 mailu_sitename: Mailu
 mailu_branch: master

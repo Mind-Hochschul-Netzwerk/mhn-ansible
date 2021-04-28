@@ -1,5 +1,4 @@
 ---
-stack_group: users
 traefik_branch: master
 traefik_make_target: dev
 traefik_cert_mail: kontakt@{{ DOMAINNAME }}

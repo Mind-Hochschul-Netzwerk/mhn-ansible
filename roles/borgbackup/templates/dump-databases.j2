@@ -62,6 +62,6 @@ for container in $CONTAINERS; do
 
     echo "exporting postgres: $container"
 
-    docker exec -i -e PGPASSWORD="$POSTGRES_PW" $container pg_dumpall --user="$DBUSER" > "$CONTAINER_BACKUP_DIR/$database.sql"
+    docker exec -i -e PGPASSWORD="$POSTGRES_PW" $container pg_dumpall --user="$DBUSER" > "$CONTAINER_BACKUP_DIR/pg_dumpall.sql"
 
 done

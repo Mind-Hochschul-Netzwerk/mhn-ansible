@@ -6,20 +6,6 @@
       - jq
     state: latest
 
-- name: Borg Config Folder
-  become: true
-  ansible.builtin.file:
-    path: "/etc/borg"
-    state: directory
-
-- name: Template Borg Config
-  ansible.builtin.template:
-    src: borg-config.j2
-    dest: /etc/borg/config
-    owner: "{{ ansible_user }}"
-    group: "root"
-    mode: 0660
-
 - name: Add Borg Ssh PrivKey
   ansible.builtin.copy:
     dest: "/home/{{ ansible_user }}/.ssh/id_borg"
@@ -28,43 +14,41 @@
     group: "root"
     mode: 0600
 
-- name: Template Borg Scripts
-  ansible.builtin.template:
-    src: "{{ item }}.j2"
-    dest: "/usr/local/sbin/{{ item }}"
+- name: ensure Pip Packages installed
+  import_role:
+    name: geerlingguy.pip
+  vars:
+    pip_install_packages:
+      - name: borgmatic
+
+- name: Borgmatic Config Folder
+  become: true
+  ansible.builtin.file:
+    path: "/etc/borgmatic"
+    state: directory
     owner: "{{ ansible_user }}"
     group: "root"
     mode: 0770
-  loop:
-    - borg-check
-    - borg-init
-    - borg-backup
-    - borg-prune
-    - borg-list
-    - borg-info
-    - borg-mount
-    - borg-restore-latest
-    - dump-databases
 
-# Disabled for now, because the first Borg ssh connection usually fails the Fingerprint check
-# - name: Maybe restore latest
-#   ansible.builtin.shell:
-#     cmd: borg-restore-latest | tee -a /var/log/firstrestore.log
-#   register: restorelatest
-#   changed_when: "'is not Empty' not in restorelatest.stdout"
-#   tags:
-#     - restorelast
+- name: Template Borgmatic Config
+  ansible.builtin.template:
+    src: borgmatic-config.yaml.j2
+    dest: /etc/borgmatic/config.yaml
+    owner: "{{ ansible_user }}"
+    group: "root"
+    mode: 0660
+
+- name: Template Database Dump Script
+  ansible.builtin.template:
+    src: "dump-databases.j2"
+    dest: "/usr/local/sbin/dump-databases"
+    owner: "{{ ansible_user }}"
+    group: "root"
+    mode: 0770
 
 - name: Set Backup Cron Job
   ansible.builtin.cron:
     name: "Borg Backup"
     minute: "47"
     hour: "4"
-    job: "/usr/local/sbin/borg-backup --cron"
-
-- name: Set Backup Prune Cron Job
-  ansible.builtin.cron:
-    name: "Borg Prune"
-    minute: "37"
-    hour: "2"
-    job: "/usr/local/sbin/borg-prune --cron"
+    job: "PATH=$PATH:/usr/bin:/usr/local/bin borgmatic --syslog-verbosity 1"

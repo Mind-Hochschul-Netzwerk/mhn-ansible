@@ -1,0 +1,33 @@
+location:
+  source_directories:
+        - /srv
+
+  repositories:
+    - "{{ borg_backup_target }}"
+
+  exclude_patterns:
+    - '*/tmp/*'
+    - '*/cache/*'
+
+storage:
+  encryption_passphrase: "{{ borg_backup_passphrase }}"
+
+  ssh_command: 'ssh -p {{ borg_backup_port }} -i /home/{{ ansible_user }}/.ssh/id_borg'
+  archive_name_format: '{hostname}-{now:%Y-%m-%d.%H}'
+
+retention:
+  keep_daily: 7
+  keep_weekly: 4
+  keep_monthly: 6
+  keep_yearly: 1
+  prefix: '{hostname}-'
+
+consistency:
+  checks:
+    - repository
+    - archives
+  check_last: 3
+
+hooks:
+  before_backup:
+    - "nice ionice /usr/local/sbin/dump-databases"

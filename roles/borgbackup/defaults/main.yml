@@ -1,5 +1,7 @@
 ---
-borg_backup_target: ssh://backupuser@localhost:22/./borg/{{ ansible_hostname }}
+borg_backup_target: ssh://backupuser@localhost/./borg/{{ ansible_hostname }}
+borg_backup_port: 22
+borg_backup_source_path: "/srv"
 borg_backup_passphrase: superdupersecret
 borg_backup_ssh_key: |
   -----BEGIN OPENSSH PRIVATE KEY-----

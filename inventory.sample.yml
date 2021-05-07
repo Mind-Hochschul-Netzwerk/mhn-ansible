@@ -20,7 +20,8 @@ all:
           pubkey: | # Multiline String
             ssh-rsa AAAAB3NzaC1kcX1HohPSrqg4Q4muv3ScSBMh6TZuwsZySNW6DCEfAiu9F36SIpbgAx3I4O5jpGFNBBSmm0FGbjsAE3VnCdJprM=yoshi@example
 
-      borg_backup_target: ssh://backupuser@localhost:22/./borg/{{ inventory_hostname  }}
+      borg_backup_target: ssh://backupuser@localhost/./borg/{{ inventory_hostname  }}
+      borg_backup_port: 22
       borg_backup_passphrase: superdupersecret
       borg_backup_ssh_key: |
         -----BEGIN OPENSSH PRIVATE KEY-----

@@ -23,6 +23,7 @@
 
 - name: Deploy Docker Stacks
   hosts: all
+  become: no
   roles:
     # Docker Stacks:
     - traefik
@@ -34,5 +35,6 @@
     - pretix
     - akademie
     - referenten
+    - wiki
   tags:
     - dockerstacks

@@ -86,3 +86,9 @@ all:
       akademie_make_target: prod
       akademie_branch: main
       akademie_additional_host_rules: "|| Host(`alternative.org`) || Host(`alternative.com`)"
+
+      wiki_make_target: dev
+      wiki_branch: main
+      wiki_secret_key: supersecret
+      wiki_mysql_password: secret
+      wiki_mysql_root_password: subersecret

@@ -2,3 +2,5 @@
 moodle_branch: master
 moodle_make_target: dev
 moodle_mail_addr: moodle@{{ DOMAINNAME }}
+moodle_mysql_root_password: rootpw
+moodle_mysql_password: secret

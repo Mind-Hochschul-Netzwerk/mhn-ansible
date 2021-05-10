@@ -17,6 +17,7 @@
     path: "{{ stack_folder }}/"
     state: directory
     owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
 
 - name: "Clone Repo"
   git:

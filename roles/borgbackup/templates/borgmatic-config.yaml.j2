@@ -11,7 +11,7 @@ location:
 
 storage:
   encryption_passphrase: "{{ borg_backup_passphrase }}"
-
+  compression: auto,zstd
   ssh_command: 'ssh -p {{ borg_backup_port }} -i /home/{{ ansible_user }}/.ssh/id_borg'
   archive_name_format: '{hostname}-{now:%Y-%m-%d.%H}'
 

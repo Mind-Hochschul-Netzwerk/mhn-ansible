@@ -6,6 +6,7 @@ datadir=/data
 registration=off
 trust_x_forwarded_for=on
 trust_x_forwarded_proto=on
+auth_backends=pretix.base.auth.NativeAuthBackend,pretix_ldap.LDAPAuthBackend
 
 [locale]
 default=de
@@ -19,9 +20,13 @@ password={{ pretix_postgres_pw }}
 host=database
 
 [mail]
-; See config file documentation for more options
 from=tickets@{{ DOMAINNAME }}
 host=smtp
+user={{ pretix_smtp_user }}
+password={{ pretix_smtp_password }}
+port=587
+tls=on
+ssl=off
 
 
 [redis]
@@ -31,3 +36,10 @@ sessions=true
 [celery]
 backend=redis://redis/1
 broker=redis://redis/2
+
+[ldap]
+bind_url=ldap://ldap
+bind_dn=cn=admin,dc=mind-hochschul-netzwerk,dc=de
+bind_password={{ ldap_password }}
+search_base=ou=people,dc=mind-hochschul-netzwerk,dc=de
+search_filter=(&(objectClass=inetOrgPerson)(mail={email}))

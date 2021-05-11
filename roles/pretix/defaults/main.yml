@@ -1,2 +1,5 @@
 ---
 pretix_branch: master
+pretix_make_target: prod
+pretix_smtp_user: pretix
+pretix_smtp_password: secret

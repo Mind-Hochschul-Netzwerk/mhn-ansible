@@ -3,9 +3,7 @@
 BACKUP_BASE_DIR="{{ borg_backup_source_path }}/backup"
 mkdir -p "$BACKUP_BASE_DIR"
 
-find $BACKUP_BASE_DIR -mindepth 1 -type d -ctime +7 -prune -exec rm -rf {} \;
-
-BACKUP_DIR="$BACKUP_BASE_DIR/databases/$(date +%Y-%m-%d)"
+BACKUP_DIR="$BACKUP_BASE_DIR/databases/"
 
 {% raw %}
 CONTAINERS="$(docker ps -f expose=3306 --format "{{.Names}}")"

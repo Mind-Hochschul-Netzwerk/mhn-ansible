@@ -37,15 +37,29 @@
   tags:
     - stackvolumes
 
+- name: "Set .nobackup flag for postgresdb volume"
+  become: true
+  ansible.builtin.file:
+    path: "{{ stack_volume_folder }}/postgres/.nobackup"
+    state: present
+  tags:
+    - stackvolumes
+
 - name: "Template docker .env"
   ansible.builtin.template:
     src: ".env.j2"
     dest: "{{ stack_folder }}/.env"
+    owner: "{{ ansible_user }}"
+    group: "root"
+    mode: 0600
 
 - name: "Template Pretix.cfg"
   ansible.builtin.template:
     src: "pretix.cfg.j2"
     dest: "{{ stack_folder }}/pretix.cfg"
+    owner: "{{ ansible_user }}"
+    group: "root"
+    mode: 0600
 
 ## Deploy Stack
 - name: Deploy Stack

@@ -44,6 +44,9 @@
   ansible.builtin.template:
     src: "traefik.env.j2"
     dest: "{{ stack_folder }}/.env"
+    owner: "{{ ansible_user }}"
+    group: "root"
+    mode: 0600
 
 - name: Deploy Stack
   community.general.make:

@@ -9,6 +9,9 @@ location:
     - '*/tmp/*'
     - '*/cache/*'
 
+  exclude_if_present:
+    - .nobackup
+
 storage:
   encryption_passphrase: "{{ borg_backup_passphrase }}"
   compression: auto,zstd

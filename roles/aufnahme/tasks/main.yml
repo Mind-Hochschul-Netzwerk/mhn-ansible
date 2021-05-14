@@ -38,12 +38,23 @@
     path: "{{ item }}/"
     state: directory
   loop:
-    - "{{ stack_volume_folder }}"
+    - "{{ stack_volume_folder }}/mariadb"
+
+- name: "Set .nobackup flag for mariadb volume"
+  become: true
+  ansible.builtin.file:
+    path: "{{ stack_volume_folder }}/mariadb/.nobackup"
+    state: present
+  tags:
+    - stackvolumes
 
 - name: "Template docker .env"
   ansible.builtin.template:
     src: ".env.j2"
     dest: "{{ stack_folder }}/.env"
+    owner: "{{ ansible_user }}"
+    group: "root"
+    mode: 0600
 
 - name: Deploy Stack
   community.general.make:

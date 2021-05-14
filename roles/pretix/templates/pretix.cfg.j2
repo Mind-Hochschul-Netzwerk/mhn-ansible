@@ -21,7 +21,7 @@ host=database
 
 [mail]
 from=tickets@{{ DOMAINNAME }}
-host=smtp
+host={{ DOMAINNAME }}
 user={{ pretix_smtp_user }}
 password={{ pretix_smtp_password }}
 port=587

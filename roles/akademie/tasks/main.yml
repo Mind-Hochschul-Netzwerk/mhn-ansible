@@ -27,7 +27,7 @@
 - name: "Ensure Stack Volume Folder exists"
   become: true
   ansible.builtin.file:
-    path: "{{ stack_volume_folder }}/mariadb"
+    path: "{{ stack_volume_folder }}/"
     state: directory
   tags:
     - stackvolumes

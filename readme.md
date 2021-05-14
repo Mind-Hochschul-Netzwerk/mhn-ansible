@@ -52,6 +52,7 @@ Some parts of the process can be selected using [Ansible-Tags](https://docs.ansi
 | `update`       | Updates all APT packages to Latest             |
 | `lockdown`     | Lockdown Role (Lockdown Settings)              |
 | `backup`       | Backup Role (Installs & configures Borgbackup) |
+| `backupcron`   | Sets the cron task for backups                 |
 | `startstack`   | Make or Docker-compose up commands             |
 | `stackvolumes` | Stack volume Creation                          |
 | `dockerstacks` | Only the Stack provisioning Play               |

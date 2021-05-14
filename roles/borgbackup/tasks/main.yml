@@ -52,3 +52,5 @@
     minute: "47"
     hour: "4"
     job: "PATH=$PATH:/usr/bin:/usr/local/bin borgmatic --syslog-verbosity 1"
+  tags:
+    - backupcron

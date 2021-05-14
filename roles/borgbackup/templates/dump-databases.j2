@@ -13,8 +13,8 @@ for container in $CONTAINERS; do
     CONTAINER_WORKING_DIR=$(docker inspect "$container" | jq -r '.[0].Config.Labels."com.docker.compose.project.working_dir"')
 
     PASSWORD=$(grep MYSQL_ROOT_PASSWORD $CONTAINER_WORKING_DIR/.env)
-    PASSWORD=${PASSWORD#*=}
-    PASSWORD=$(echo "$PASSWORD" | sed -e 's/^"//' -e 's/"$//')
+    PASSWORD=${PASSWORD#*=} # Get Value from Key=Value pair
+    PASSWORD=$(echo "$PASSWORD" | sed -e 's/^"//' -e 's/"$//') # Remove surrounding quotations
 
     CONTAINER_BACKUP_DIR="$BACKUP_DIR/$container"
     mkdir -p "$CONTAINER_BACKUP_DIR"
@@ -51,10 +51,12 @@ for container in $CONTAINERS; do
     CONTAINER_WORKING_DIR=$(docker inspect "$container" | jq -r '.[0].Config.Labels."com.docker.compose.project.working_dir"')
 
     PASSWORD=$(grep POSTGRES_PW $CONTAINER_WORKING_DIR/.env)
-    PASSWORD=${PASSWORD#*=}
+    PASSWORD=${PASSWORD#*=} # Get Value from Key=Value pair
+    PASSWORD=$(echo "$PASSWORD" | sed -e 's/^"//' -e 's/"$//') # Remove surrounding quotations
 
     DBUSER=$(grep POSTGRES_USER $CONTAINER_WORKING_DIR/.env)
-    DBUSER=${DBUSER#*=}
+    DBUSER=${DBUSER#*=} # Get Value from Key=Value pair
+    DBUSER=$(echo "$DBUSER" | sed -e 's/^"//' -e 's/"$//') # Remove surrounding quotations
 
     CONTAINER_BACKUP_DIR="$BACKUP_DIR/$container"
     mkdir -p "$CONTAINER_BACKUP_DIR"

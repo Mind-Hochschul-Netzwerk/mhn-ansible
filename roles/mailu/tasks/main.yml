@@ -55,11 +55,9 @@
     mode: 0600
 
 ## Deploy Stack
-- name: "Create and start Stack"
-  community.docker.docker_compose:
-    state: present
-    pull: yes
-    project_name: "{{ stack_name }}"
-    project_src: "{{ stack_folder }}"
+## Deploy Stac- name: Deploy Stack
+  community.general.make:
+    chdir: "{{ stack_folder }}"
+    target: "{{ mailu_make_target }}"
   tags:
     - startstack

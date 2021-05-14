@@ -37,6 +37,7 @@ all:
       traefik_ca_server: https://acme-staging-v02.api.letsencrypt.org/directory
 
       mailu_branch: master
+      mailu_make_target: prod
       mailu_sitename: MHN Mailu
       mailu_subnet: 10.11.0.0/16
       mailu_initial_admin_account: admin

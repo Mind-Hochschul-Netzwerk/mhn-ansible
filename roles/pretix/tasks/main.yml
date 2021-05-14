@@ -34,7 +34,7 @@
   loop:
     - "{{ stack_volume_folder }}/data/logs"
     - "{{ stack_volume_folder }}/data/media"
-    - "{{ stack_volume_folder }}/postgres"
+    - "{{ stack_volume_folder }}/postgres/db"
   tags:
     - stackvolumes
 

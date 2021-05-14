@@ -1,0 +1,19 @@
+#!/bin/bash
+#First argument is container name
+
+BACKUP_BASE_DIR="{{ borg_backup_source_path }}/backup/databases/"
+
+CONTAINER_WORKING_DIR=$(docker inspect "$1" | jq -r '.[0].Config.Labels."com.docker.compose.project.working_dir"')
+
+PASSWORD=$(grep MYSQL_ROOT_PASSWORD $CONTAINER_WORKING_DIR/.env)
+PASSWORD=${PASSWORD#*=}
+PASSWORD=$(echo "$PASSWORD" | sed -e 's/^"//' -e 's/"$//')
+
+DATABASE_FILES=$(ls $BACKUP_BASE_DIR/$container)
+echo "Running Restore for $container"
+echo "  Restoring: $DATABASE_FILES"
+for database in $DATABASE_FILES; do
+    echo "  Restoring from: '$BACKUP_BASE_DIR/$container/$database'"
+    docker exec -i $container mysql --user root --password=$PASSWORD -C ${database%.*} < $BACKUP_BASE_DIR/$container/$database
+done
+

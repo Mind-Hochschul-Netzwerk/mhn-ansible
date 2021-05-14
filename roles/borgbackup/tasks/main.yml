@@ -46,6 +46,22 @@
     group: "root"
     mode: 0770
 
+- name: Template Mysql Restore helper Script
+  ansible.builtin.template:
+    src: "restore-mysql.j2"
+    dest: "/usr/local/sbin/restore-mysql"
+    owner: "{{ ansible_user }}"
+    group: "root"
+    mode: 0770
+
+- name: Template Postgres Restore helper Script
+  ansible.builtin.template:
+    src: "restore-postgres.j2"
+    dest: "/usr/local/sbin/restore-postgres"
+    owner: "{{ ansible_user }}"
+    group: "root"
+    mode: 0770
+
 - name: Set Backup Cron Job
   ansible.builtin.cron:
     name: "Borg Backup"

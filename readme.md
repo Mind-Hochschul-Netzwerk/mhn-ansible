@@ -37,6 +37,9 @@ First make sure you have your `Inventory.yml` ready. See example: [inventory.sam
 Here are some examples on how to run the playbook:
 
 ```bash
+make bootstrap # Refer to makefile for more make targets
+
+## Custom Commands:
 ansible-playbook main.yml -i inventory.yml --extra-vars "ansible_sudo_pass=UserSudoPassword" # Run playbook and pass sudo password
 ansible-playbook main.yml -i inventory.yml --skip-tags "lockdown,startstack" # Run playbook skip certain parts of he Process
 ansible-playbook main.yml -i inventory.yml --tags "update,backup" # Run certain parts of he Playbook
@@ -56,3 +59,33 @@ Some parts of the process can be selected using [Ansible-Tags](https://docs.ansi
 | `startstack`   | Make or Docker-compose up commands             |
 | `stackvolumes` | Stack volume Creation                          |
 | `dockerstacks` | Only the Stack provisioning Play               |
+
+## Rrestore Process
+
+To restore, please start with a fresh Ubuntu installation.
+If your server got an initial account that is not root, please set a `initial_user` variable in the inventory. The user will be deleted and replaced with the users specified in the inventory.
+
+```bash
+pipenv shell #Activate the Python Envirionment with ansible in it.
+make bootstrap # Runs ansible against the server and sets everything up. It wont start the Backupcon or the docker stacks yet.
+```
+
+SSH to the server using the `ansible_user`
+
+Then you can retrieve the Backups using Borgmatic
+
+```bash
+sudo borgmatic extract --archive latest --verbosity 2 --destination /
+```
+
+Next it's time to restore the SQL Databases.
+Start all the Docker stacks with `make database`
+
+Then use the restore helper scrips to restore the databases
+
+```
+sudo restore-mysql "containername"
+sudo restore-postgres "containername"
+```
+
+When done, run `make all` in your ansible environment to finish up the backup cron and start all the containers.

@@ -1,0 +1,22 @@
+#!/bin/bash
+# First argument is container name
+BACKUP_BASE_DIR="{{ borg_backup_source_path }}/backup/databases/"
+
+
+CONTAINER_WORKING_DIR=$(docker inspect "$1" | jq -r '.[0].Config.Labels."com.docker.compose.project.working_dir"')
+
+PASSWORD=$(grep MYSQL_ROOT_PASSWORD $CONTAINER_WORKING_DIR/.env)
+PASSWORD=${PASSWORD#*=}
+PASSWORD=$(echo "$PASSWORD" | sed -e 's/^"//' -e 's/"$//')
+
+DBUSER=$(grep POSTGRES_USER $CONTAINER_WORKING_DIR/.env)
+DBUSER=${DBUSER#*=}
+
+DATABASE_FILES=$(ls $BACKUP_BASE_DIR/$1)
+echo "Running Restore for $1"
+for database in $DATABASE_FILES; do
+    echo "  Restoring from: '$BACKUP_BASE_DIR/$1/$database'"
+    cat $BACKUP_BASE_DIR/$1/$database | docker exec -i -e PGPASSWORD=$PASSWORD $1 psql -U $DBUSER
+done
+
+

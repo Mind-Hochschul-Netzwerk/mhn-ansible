@@ -61,8 +61,8 @@
     src: "pretix.cfg.j2"
     dest: "{{ stack_folder }}/pretix.cfg"
     owner: "{{ ansible_user }}"
-    group: "root"
-    mode: 0600
+    group: "15371"
+    mode: 0660
 
 ## Deploy Stack
 - name: Deploy Stack

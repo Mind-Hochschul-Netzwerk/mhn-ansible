@@ -41,6 +41,7 @@
     - stackvolumes
 
 - name: "Template docker .env"
+  become: true
   ansible.builtin.template:
     src: "traefik.env.j2"
     dest: "{{ stack_folder }}/.env"

@@ -6,7 +6,7 @@
   setup:
     gather_subset: all
 
-- name: "create new user without a password"
+- name: "create ansible user"
   register: newuser
   become: true
   user:

@@ -34,6 +34,7 @@
   loop:
     - "{{ stack_volume_folder }}/data/logs"
     - "{{ stack_volume_folder }}/data/media"
+    - "{{ stack_volume_folder }}/postgres"
   tags:
     - stackvolumes
 
@@ -41,11 +42,12 @@
   become: true
   ansible.builtin.file:
     path: "{{ stack_volume_folder }}/postgres/.nobackup"
-    state: present
+    state: touch
   tags:
     - stackvolumes
 
 - name: "Template docker .env"
+  become: true
   ansible.builtin.template:
     src: ".env.j2"
     dest: "{{ stack_folder }}/.env"
@@ -54,6 +56,7 @@
     mode: 0600
 
 - name: "Template Pretix.cfg"
+  become: true
   ansible.builtin.template:
     src: "pretix.cfg.j2"
     dest: "{{ stack_folder }}/pretix.cfg"

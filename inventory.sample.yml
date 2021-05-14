@@ -75,10 +75,6 @@ all:
       aufnahme_mysql_root_password: supersecret
       aufnahme_token_Key: tooooken
 
-      account_branch: master
-      account_mysql_password: password
-      account_myswl_root_password: superpass
-
       referenten_branch: main
       referenten_make_target: dev
       referenten_mqsql_root_password: supersave

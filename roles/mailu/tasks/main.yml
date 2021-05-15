@@ -55,7 +55,7 @@
     mode: 0600
 
 ## Deploy Stack
-## Deploy Stac- name: Deploy Stack
+- name: Deploy Stack
   community.general.make:
     chdir: "{{ stack_folder }}"
     target: "{{ mailu_make_target }}"

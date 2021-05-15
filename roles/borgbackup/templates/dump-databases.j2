@@ -23,7 +23,7 @@ for container in $CONTAINERS; do
     echo "exporting mysql: $container -->" $DATABASES
     for database in $DATABASES; do
         docker exec "$container" mysqldump \
-            --default-character-set=utf8\
+            --default-character-set=utf8mb4\
             --password="$PASSWORD"\
             --add-drop-database\
             --add-drop-table\

@@ -10,10 +10,9 @@ PASSWORD=$(grep MYSQL_ROOT_PASSWORD $CONTAINER_WORKING_DIR/.env)
 PASSWORD=${PASSWORD#*=}
 PASSWORD=$(echo "$PASSWORD" | sed -e 's/^"//' -e 's/"$//')
 
-DATABASE_FILES=$(ls $BACKUP_BASE_DIR/$container)
+DATABASE_FILES=$(ls -I information_schema.sql -I performance_schema.sql $BACKUP_BASE_DIR/$container)
 
 for database in $DATABASE_FILES; do
     echo "  Restoring from: '$BACKUP_BASE_DIR/$container/$database'"
-    docker exec -i $container mysql --user root --password="$PASSWORD" -C ${database%.*} < $BACKUP_BASE_DIR/$container/$database
+    docker exec -i "$container" mysql --user root --password="$PASSWORD" "${database%.*}" < "$BACKUP_BASE_DIR/$container/$database"
 done
-

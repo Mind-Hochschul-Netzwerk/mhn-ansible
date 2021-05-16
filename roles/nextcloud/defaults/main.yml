@@ -1,0 +1,7 @@
+---
+nextcloud_branch: main
+nextcloud_make_target: prod
+nextcloud_mysql_root_password: rootpw
+nextcloud_mysql_password: secret
+nextcloud_admin_user: admin
+nextcloud_admin_password: admin

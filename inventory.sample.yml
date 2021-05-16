@@ -92,3 +92,12 @@ all:
       wiki_secret_key: supersecret
       wiki_mysql_password: secret
       wiki_mysql_root_password: subersecret
+
+      nextcloud_branch: main
+      nextcloud_make_target: prod
+      nextcloud_smtp_user: nextcloud@{{ DOMAINNAME }}
+      nextcloud_smtp_password: password
+      nextcloud_mysql_root_password: password
+      nextcloud_mysql_password: secret
+      nextcloud_admin_user: admin
+      nextcloud_admin_password: secret

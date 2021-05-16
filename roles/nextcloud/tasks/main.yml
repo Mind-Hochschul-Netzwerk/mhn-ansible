@@ -1,0 +1,59 @@
+---
+- name: "Set Stack Name"
+  ansible.builtin.set_fact:
+    stack_name: "nextcloud"
+
+- name: "Set Stack Folder"
+  ansible.builtin.set_fact:
+    stack_folder: "/opt/{{ stack_name }}"
+
+- name: "Set Stack Volume Folder"
+  ansible.builtin.set_fact:
+    stack_volume_folder: "/srv/{{ stack_name }}"
+
+- name: "Ensure Stack Folder exists"
+  become: true
+  ansible.builtin.file:
+    path: "{{ stack_folder }}/"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: "Clone Repo"
+  git:
+    repo: git@github.com:Mind-Hochschul-Netzwerk/nextcloud.git
+    dest: "{{ stack_folder }}"
+    version: "{{ nextcloud_branch }}"
+
+- name: "Ensure Stack Volume Folder exists"
+  become: true
+  ansible.builtin.file:
+    path: "{{ stack_volume_folder }}/mariadb"
+    state: directory
+  tags:
+    - stackvolumes
+
+- name: "Set .nobackup flag for mariadb volume"
+  become: true
+  ansible.builtin.file:
+    path: "{{ stack_volume_folder }}/mariadb/.nobackup"
+    state: touch
+  tags:
+    - stackvolumes
+
+- name: "Template docker .env"
+  become: true
+  ansible.builtin.template:
+    src: ".env.j2"
+    dest: "{{ stack_folder }}/.env"
+    owner: "{{ ansible_user }}"
+    group: "root"
+    mode: 0600
+
+## Deploy Stack
+- name: Deploy Stack
+  community.general.make:
+    chdir: "{{ stack_folder }}"
+    target: "{{ nextcloud_make_target }}"
+  tags:
+    - startstack

@@ -54,7 +54,7 @@
     src: ".env.j2"
     dest: "{{ stack_folder }}/.env"
     owner: "{{ ansible_user }}"
-    group: "root"
+    group: "{{ ansible_user }}"
     mode: 0600
 
 - name: Deploy Stack

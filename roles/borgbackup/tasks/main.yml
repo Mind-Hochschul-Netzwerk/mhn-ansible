@@ -11,7 +11,7 @@
     dest: "/home/{{ ansible_user }}/.ssh/id_borg"
     content: "{{ borg_backup_ssh_key }}"
     owner: "{{ ansible_user }}"
-    group: "root"
+    group: "{{ ansible_user }}"
     mode: 0600
 
 - name: ensure Pip Packages installed
@@ -27,7 +27,7 @@
     path: "/etc/borgmatic"
     state: directory
     owner: "{{ ansible_user }}"
-    group: "root"
+    group: "{{ ansible_user }}"
     mode: 0770
 
 - name: Template Borgmatic Config
@@ -35,7 +35,7 @@
     src: borgmatic-config.yaml.j2
     dest: /etc/borgmatic/config.yaml
     owner: "{{ ansible_user }}"
-    group: "root"
+    group: "{{ ansible_user }}"
     mode: 0660
 
 - name: Template Database Dump Script
@@ -43,7 +43,7 @@
     src: "dump-databases.j2"
     dest: "/usr/local/sbin/dump-databases"
     owner: "{{ ansible_user }}"
-    group: "root"
+    group: "{{ ansible_user }}"
     mode: 0770
 
 - name: Template Mysql Restore helper Script
@@ -51,7 +51,7 @@
     src: "restore-mysql.j2"
     dest: "/usr/local/sbin/restore-mysql"
     owner: "{{ ansible_user }}"
-    group: "root"
+    group: "{{ ansible_user }}"
     mode: 0770
 
 - name: Template Postgres Restore helper Script
@@ -59,7 +59,7 @@
     src: "restore-postgres.j2"
     dest: "/usr/local/sbin/restore-postgres"
     owner: "{{ ansible_user }}"
-    group: "root"
+    group: "{{ ansible_user }}"
     mode: 0770
 
 - name: Set Backup Cron Job

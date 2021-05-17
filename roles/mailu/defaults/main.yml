@@ -2,3 +2,4 @@ mailu_subnet: 10.11.0.0/16
 mailu_sitename: Mailu
 mailu_branch: master
 mailu_make_target: prod
+mailu_log_level: WARNING

@@ -42,8 +42,8 @@
 
 - name: "Template mailu .env"
   ansible.builtin.template:
-    src: "config.env.j2"
-    dest: "{{ stack_folder }}/config.env"
+    src: "mailu.env.j2"
+    dest: "{{ stack_folder }}/mailu.env"
 
 - name: "Template docker .env"
   become: true
@@ -51,7 +51,7 @@
     src: ".env.j2"
     dest: "{{ stack_folder }}/.env"
     owner: "{{ ansible_user }}"
-    group: "root"
+    group: "{{ ansible_user }}"
     mode: 0600
 
 ## Deploy Stack

@@ -43,6 +43,7 @@ all:
       mailu_initial_admin_account: admin
       mailu_initial_admin_password: secret
       mailu_secret_key_16char: dqwdoivnwei0nera
+      mailu_log_level: WARNING
 
       ldap_branch: master
       ldap_password: password
@@ -60,8 +61,10 @@ all:
       moodle_make_target: dev
       moodle_mysql_password: password
       moodle_mysql_root_password: root
-      moodle_mail_addr: moodle@{{ DOMAINNAME }}
-      moodle_mail_pw: admpass
+      moodle_mail_addr_smtp: moodle@{{ DOMAINNAME }}
+      moodle_mail_addr_imap: m@{{ DOMAINNAME }}
+      moodle_mail_smtp_pw: adm
+      moodle_mail_imap_pw: adm
 
       mitglieder_branch: main
       mitglieder_make_target: dev

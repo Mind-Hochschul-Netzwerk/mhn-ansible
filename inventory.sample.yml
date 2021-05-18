@@ -84,7 +84,6 @@ all:
       aufnahme_smtp_user: aufnahmekommision@{{ DOMAINNAME }}
       aufnahme_smtp_password: secret
       aufnahme_from_mail: aufnahmekommision@{{ DOMAINNAME }}
-      aufnahme_team_mail: aufnahmekommision@{{ DOMAINNAME }}
 
       referenten_branch: main
       referenten_make_target: dev

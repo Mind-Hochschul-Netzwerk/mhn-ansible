@@ -72,12 +72,19 @@ all:
       mitglieder_aufnahme_secret: secret
       mitglieder_mysql_root_password: password
       mitglieder_token_key: blah
+      mitglieder_smtp_user: mitglieder@{{ DOMAINNAME }}
+      mitglieder_smtp_password: secret
+      mitglieder_from_mail: mitglieder@{{ DOMAINNAME }}
 
       aufnahme_branch: main
       aufnahme_make_target: dev
       aufnahme_mysql_password: secret
       aufnahme_mysql_root_password: supersecret
       aufnahme_token_Key: tooooken
+      aufnahme_smtp_user: aufnahmekommision@{{ DOMAINNAME }}
+      aufnahme_smtp_password: secret
+      aufnahme_from_mail: aufnahmekommision@{{ DOMAINNAME }}
+      aufnahme_team_mail: aufnahmekommision@{{ DOMAINNAME }}
 
       referenten_branch: main
       referenten_make_target: dev

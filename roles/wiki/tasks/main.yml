@@ -28,8 +28,16 @@
 - name: "Ensure Stack Volume Folder exists"
   become: true
   ansible.builtin.file:
-    path: "{{ stack_volume_folder }}/"
+    path: "{{ stack_volume_folder }}/mariadb"
     state: directory
+  tags:
+    - stackvolumes
+
+- name: "Set .nobackup flag for mariadb volume"
+  become: true
+  ansible.builtin.file:
+    path: "{{ stack_volume_folder }}/mariadb/.nobackup"
+    state: touch
   tags:
     - stackvolumes
 

@@ -43,6 +43,8 @@
   ansible.builtin.file:
     path: "{{ stack_volume_folder }}/postgres/.nobackup"
     state: touch
+    modification_time: preserve
+    access_time: preserve
   tags:
     - stackvolumes
 

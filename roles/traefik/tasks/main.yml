@@ -40,6 +40,12 @@
   tags:
     - stackvolumes
 
+- name: "Template logrotate"
+  become: true
+  ansible.builtin.template:
+    src: "logrotate.j2"
+    dest: "/etc/logrotate.d/traefik"
+
 - name: "Template docker .env"
   become: true
   ansible.builtin.template:

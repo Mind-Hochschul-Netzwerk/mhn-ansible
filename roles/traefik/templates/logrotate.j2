@@ -1,0 +1,15 @@
+{{ stack_volume_folder }}/traefik.log {
+  rotate 4
+  weekly
+  compress
+  missingok
+  notifempty
+}
+
+{{ stack_volume_folder }}/accesslog.log {
+  rotate 4
+  weekly
+  compress
+  missingok
+  notifempty
+}

@@ -1,0 +1,28 @@
+---
+- name: install fail2ban
+  package:
+    name: "fail2ban"
+    state: "latest"
+    update_cache: true
+    cache_valid_time: "3600"
+
+- name: "Template fail2ban local config"
+  become: true
+  ansible.builtin.template:
+    src: "fail2ban.local.j2"
+    dest: "/etc/fail2ban/fail2ban.local"
+  notify: Restart fail2ban
+
+- name: "Template fail2ban traefik config"
+  become: true
+  ansible.builtin.template:
+    src: "traefik.conf.j2"
+    dest: "/etc/fail2ban/jail.d/traefik.conf"
+  notify: Restart fail2ban
+
+- name: "Template fail2ban traefik filter"
+  become: true
+  ansible.builtin.template:
+    src: "traefik-auth.conf.j2"
+    dest: "/etc/fail2ban/filter.d/traefik-auth.conf"
+  notify: Restart fail2ban

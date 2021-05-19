@@ -5,5 +5,8 @@
 - name: Lockdown UFW
   include_tasks: ufw_lockdown.yml
 
+- name: Lockdown fail2ban
+  include_tasks: fail2ban.yml
+
 - name: flush handlers
   meta: flush_handlers

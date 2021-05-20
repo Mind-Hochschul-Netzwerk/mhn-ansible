@@ -3,3 +3,4 @@ mailu_sitename: Mailu
 mailu_branch: master
 mailu_make_target: prod
 mailu_log_level: WARNING
+mailu_hostnames: "{{ DOMAINNAME }},mailu.{{ DOMAINNAME }}"

@@ -55,6 +55,15 @@
     group: "{{ ansible_user }}"
     mode: 0600
 
+- name: "Template dnschallenge .env"
+  become: true
+  ansible.builtin.copy:
+    content: "{{ traefik_dnschallenge_env }}"
+    dest: "{{ stack_folder }}/dnschallenge.env"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0600
+
 - name: Deploy Stack
   community.general.make:
     chdir: "{{ stack_folder }}"

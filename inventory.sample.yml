@@ -94,7 +94,7 @@ all:
 
       akademie_make_target: prod
       akademie_branch: main
-      akademie_additional_host_rules: "|| Host(`alternative.org`) || Host(`alternative.com`)"
+      akademie_traefik_host_rule: "Host(`akademie.{{DOMAINNAME}}`) "
 
       wiki_make_target: dev
       wiki_branch: main

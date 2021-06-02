@@ -12,3 +12,6 @@ stacks:
 
 backup:
 	ansible-playbook main.yml -i inventory.yml --tags "backup"
+
+users:
+	ansible-playbook main.yml -i inventory.yml --tags "base"

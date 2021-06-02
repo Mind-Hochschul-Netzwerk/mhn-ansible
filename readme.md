@@ -59,6 +59,7 @@ Some parts of the process can be selected using [Ansible-Tags](https://docs.ansi
 | `startstack`   | Make or Docker-compose up commands             |
 | `stackvolumes` | Stack volume Creation                          |
 | `dockerstacks` | Only the Stack provisioning Play               |
+| `users`        | User Creation                                  |
 
 ## Rrestore Process
 

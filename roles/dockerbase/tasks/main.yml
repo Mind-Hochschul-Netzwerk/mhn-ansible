@@ -55,6 +55,8 @@
 - name: Include Users
   include_tasks: users.yml
   when: deploy_users is defined
+  tags:
+    - users
 
 - name: Flush handlers
   meta: flush_handlers

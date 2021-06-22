@@ -2,28 +2,46 @@
 # When using this role from the maybecreateuser role, gather_facts must be
 # disabled at the playbook level to avoid initialization problems.
 # Ensure the facts are gathered now, since we need them.
+
 - name: "gather facts"
   setup:
     gather_subset: all
 
-- name: "create ansible user"
-  register: newuser
+- name: "create ansible user: {{ username }}"
   become: true
   user:
     name: "{{ username }}"
     create_home: yes
-    groups:
-      - sudo
     state: present
     shell: /bin/bash
+  register: newuser
 
 - name: Add authorized key
   authorized_key:
     user: "{{ username }}"
     key: "{{ ansible_user_pubkeys }}"
     exclusive: yes
+  when: ansible_user_pubkeys is defined
+  notify: restart sshd
 
-- name: Allow sudo for ansible
+- name: "Ensure .ssh directory"
+  file:
+    path: /home/{{ username }}/.ssh
+    state: directory
+    mode: 0700
+    owner: "{{ username }}"
+
+- name: Copy Authorized keys from Ansible_User if nothing is specified.
+  copy:
+    remote_src: yes
+    src: /home/{{ ansible_user }}/.ssh/authorized_keys
+    dest: /home/{{ username }}/.ssh/authorized_keys
+    owner: "{{ username }}"
+    mode: 0600
+  when: ansible_user_pubkeys is not defined
+  notify: restart sshd
+
+- name: "Allow sudo for user: {{ username }}"
   copy:
     content: "{{ username }} ALL=(ALL) NOPASSWD: ALL"
     dest: "/etc/sudoers.d/{{ username }}"

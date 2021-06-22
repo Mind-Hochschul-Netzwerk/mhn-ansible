@@ -1,30 +1,46 @@
 ---
 - name: "Register username var"
-  ansible.builtin.set_fact:
+  set_fact:
     username: "{{ ansible_user }}"
 
-# Test if the original ansible_user can SSH in or not.
-# If not, assume we can SSH in with the initial_user
-# and setup the ansible_user.
-- name: Create new user if not exists
-  vars:
-    - ansible_user: "{{ initial_user | default('root') }}"
-  block:
-    - block:
-        - name: "Wait for Connection on Initial User {{ ansible_user }}"
-          wait_for_connection:
-            timeout: 2
-          no_log: true
-        - set_fact:
-            needs_init: true
-      rescue:
-        - set_fact:
-            needs_init: false
+- name: "Ensure Initial_User"
+  set_fact:
+    initial_user: "{{ initial_user | default('root') }}"
 
+- name: "Check if User '{{ ansible_user }}' exists"
+  vars:
+    ansible_ssh_pass: "" #Clear password variables if they were supplied
+    ansible_become_pass: ""
+  block:
+    - name: "Wait for Connection on User {{ ansible_user }}"
+      wait_for_connection:
+        timeout: 2
+      no_log: true
+    - set_fact:
+        needs_init: false
+  rescue:
+    - set_fact:
+        needs_init: true
+
+- name: Create New user
+  vars:
+    ansible_user: "{{ initial_user }}"
+  block:
     - name: Create new user
       import_tasks: createuser.yml
       failed_when: false
       when: needs_init
+
+    - name: Flush restart sshd handler
+      meta: flush_handlers
+
+- name: make sure further connections dont use passwords
+  set_fact:
+    ansible_ssh_pass: ""
+    ansible_become_pass: ""
+
+- name: reset ssh connection
+  meta: reset_connection
 
 - name: "Remove Default user {{ initial_user }}"
   user:
@@ -32,7 +48,7 @@
     state: absent
     remove: yes
     force: true
-  when: initial_user | default('root') != "root" and needs_init
+  when: initial_user not in  ["root","vagrant"] and needs_init and remove_initial_user
 
 - name: reset ssh connection
   meta: reset_connection

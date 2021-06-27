@@ -11,6 +11,7 @@ all:
         ssh-rsa AAAAB3NzaC1kcX1HohPSrqg4Q4muv3ScSBMh6TZuwsZySNW6DCEfAiu9F36SIpbgAx3I4O5jpGFNBBSmm0FGbjsAE3VnCdJprM=yoshi@example
 
       DOMAINNAME: mhn.localhost
+      DOMAINNAME_2: other.localhost # other domain to grab cert for
 
       deploy_users: # List of Users that Should be deployed
         - name: joshua
@@ -35,6 +36,7 @@ all:
       traefik_make_target: dev
       traefik_cert_mail: kontakt@{{ DOMAINNAME }}
       traefik_ca_server: https://acme-staging-v02.api.letsencrypt.org/directory
+      traefik_dnschallenge_api_key: blabla
 
       mailu_branch: master
       mailu_make_target: prod

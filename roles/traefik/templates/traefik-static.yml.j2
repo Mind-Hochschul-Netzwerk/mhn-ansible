@@ -37,7 +37,7 @@ entryPoints:
       middlewares:
         - secheader@file
       tls:
-        certresolver: "hetztner"
+        certresolver: "dnschallenger"
         domains:
           - main: "*.{{ DOMAINNAME }}"
             sans:
@@ -48,7 +48,7 @@ entryPoints:
 {% endif %}
 
 certificatesResolvers:
-  cloudflare:
+  dnschallenger:
     acme:
       email: {{ traefik_cert_mail }}
       storage: /etc/traefik/acme/acme.json

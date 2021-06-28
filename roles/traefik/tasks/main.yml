@@ -62,7 +62,7 @@
     dest: "{{ stack_folder }}/conf/traefik-static.prod.yml"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
-    mode: 0600
+    mode: 0660
 
 - name: "Template dnschallenge .env"
   become: true

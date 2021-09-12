@@ -1,7 +1,7 @@
 ---
-# When using this role from the maybecreateuser role, gather_facts must be
+# When using this role, gather_facts must be
 # disabled at the playbook level to avoid initialization problems.
-# Ensure the facts are gathered now, since we need them.
+# Ensure the facts are gathered now.
 
 - name: "gather facts"
   setup:
@@ -16,14 +16,6 @@
     shell: /bin/bash
   register: newuser
 
-- name: Add authorized key
-  authorized_key:
-    user: "{{ username }}"
-    key: "{{ ansible_user_pubkeys }}"
-    exclusive: yes
-  when: ansible_user_pubkeys is defined
-  notify: restart sshd
-
 - name: "Ensure .ssh directory"
   file:
     path: /home/{{ username }}/.ssh
@@ -31,14 +23,27 @@
     mode: 0700
     owner: "{{ username }}"
 
-- name: Copy Authorized keys from Ansible_User if nothing is specified.
+- name: Check initial_user Authorized keys
+  stat:
+    path: /home/{{ ansible_user }}/.ssh/authorized_keys
+  register: initial_authorized_keys
+
+- name: Copy Authorized keys from initial_user
+  when: initial_authorized_keys.stat.exists
   copy:
     remote_src: yes
     src: /home/{{ ansible_user }}/.ssh/authorized_keys
     dest: /home/{{ username }}/.ssh/authorized_keys
     owner: "{{ username }}"
     mode: 0600
-  when: ansible_user_pubkeys is not defined
+  notify: restart sshd
+
+- name: Seed Authorized Keys
+  authorized_key:
+    user: "{{ username }}"
+    key: "{{ ansible_user_pubkeys }}"
+    exclusive: yes
+  when: ansible_user_pubkeys is defined
   notify: restart sshd
 
 - name: "Allow sudo for user: {{ username }}"

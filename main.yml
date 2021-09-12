@@ -4,7 +4,7 @@
   gather_facts: no
   become: true
   roles:
-    - initial-user # gather_facts must be disabled here to use this role
+    - initialuser # gather_facts must be disabled here to use this role
 
 - name: Provision Servers
   hosts: all

@@ -15,10 +15,12 @@
     - name: "Wait for Connection on User {{ ansible_user }} --> may fail when user needs init"
       wait_for_connection:
         timeout: 2
-    - set_fact:
+    - name: Track Ansible User doesnt need init
+      set_fact:
         needs_init: false
   rescue:
-    - set_fact:
+    - name: Track Ansible_user Does need setup
+      set_fact:
         needs_init: true
 
 - name: Create New user

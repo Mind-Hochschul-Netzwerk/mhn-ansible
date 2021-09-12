@@ -42,7 +42,7 @@ make bootstrap # Refer to makefile for more make targets
 ## Custom Commands:
 ansible-playbook main.yml -i inventory.yml --extra-vars "ansible_sudo_pass=UserSudoPassword" # Run playbook and pass sudo password
 ansible-playbook main.yml -i inventory.yml --skip-tags "lockdown,startstack" # Run playbook skip certain parts of he Process
-ansible-playbook main.yml -i inventory.yml --tags "update,backup" # Run certain parts of he Playbook
+ansible-playbook main.yml -i inventory.yml --tags "apt-upgrade,backup" # Run certain parts of he Playbook
 ```
 
 ### Available Tags
@@ -52,7 +52,7 @@ Some parts of the process can be selected using [Ansible-Tags](https://docs.ansi
 | Tag            | Effect                                         |
 | -------------- | ---------------------------------------------- |
 | `base`         | Base Install and Update Role                   |
-| `update`       | Updates all APT packages to Latest             |
+| `apt-upgrade`  | Updates all APT packages to Latest             |
 | `lockdown`     | Lockdown Role (Lockdown Settings)              |
 | `backup`       | Backup Role (Installs & configures Borgbackup) |
 | `backupcron`   | Sets the cron task for backups                 |

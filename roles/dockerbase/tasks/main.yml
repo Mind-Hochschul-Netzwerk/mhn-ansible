@@ -21,7 +21,7 @@
     state: latest
   tags:
     - never
-    - update
+    - apt-upgrade
 
 - name: Install Packages
   ansible.builtin.package:

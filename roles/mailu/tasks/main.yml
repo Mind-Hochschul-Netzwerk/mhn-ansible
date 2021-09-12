@@ -47,7 +47,6 @@
     src: "mailu.env.j2"
     mode: 0600
     dest: "{{ stack_folder }}/mailu.env"
-    backup: true
 
 - name: "Template docker .env"
   become: true
@@ -57,7 +56,6 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: 0600
-    backup: true
 
 ## Deploy Stack
 - name: Deploy Stack

@@ -59,7 +59,6 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: 0600
-    backup: true
 
 - name: "Template Pretix.cfg"
   become: true

@@ -57,7 +57,6 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: 0600
-    backup: true
 
 - name: "Template static traefik conf"
   become: true
@@ -67,7 +66,6 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: 0660
-    backup: true
 
 - name: "Template dnschallenge .env"
   become: true

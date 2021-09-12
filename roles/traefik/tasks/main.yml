@@ -17,6 +17,7 @@
     path: "{{ stack_folder }}/"
     state: directory
     owner: "{{ ansible_user }}"
+    mode: 0755
 
 - name: "Set Traefik ACME Dir" # Needs to mirror /acme/ path from Traefik Stack
   ansible.builtin.set_fact:
@@ -34,6 +35,7 @@
   ansible.builtin.file:
     path: "{{ item }}/"
     state: directory
+    mode: 0755
   loop:
     - "{{ traefik_acme_dir }}"
     - "{{ stack_volume_folder }}/log/"
@@ -45,6 +47,7 @@
   ansible.builtin.template:
     src: "logrotate.j2"
     dest: "/etc/logrotate.d/traefik"
+    mode: 0644
 
 - name: "Template docker .env"
   become: true
@@ -54,6 +57,7 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: 0600
+    backup: true
 
 - name: "Template static traefik conf"
   become: true
@@ -63,6 +67,7 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: 0660
+    backup: true
 
 - name: "Template dnschallenge .env"
   become: true

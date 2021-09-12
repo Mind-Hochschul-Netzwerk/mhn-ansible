@@ -16,6 +16,7 @@
     path: "{{ stack_folder }}/"
     state: directory
     owner: "{{ ansible_user }}"
+    mode: 0755
 
 - name: Clone Repo
   git:
@@ -29,6 +30,7 @@
   ansible.builtin.file:
     path: "{{ item }}/"
     state: directory
+    mode: 0755
   loop:
     - "{{ stack_volume_folder }}/redis/"
     - "{{ stack_volume_folder }}/certs/"
@@ -43,7 +45,9 @@
 - name: "Template mailu .env"
   ansible.builtin.template:
     src: "mailu.env.j2"
+    mode: 0600
     dest: "{{ stack_folder }}/mailu.env"
+    backup: true
 
 - name: "Template docker .env"
   become: true
@@ -53,6 +57,7 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: 0600
+    backup: true
 
 ## Deploy Stack
 - name: Deploy Stack

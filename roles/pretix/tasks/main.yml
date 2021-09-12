@@ -16,6 +16,7 @@
     path: "{{ stack_folder }}/"
     state: directory
     owner: "{{ ansible_user }}"
+    mode: 0755
 
 - name: "Clone Repo"
   git:
@@ -31,6 +32,7 @@
     state: directory
     owner: "15371"
     group: "15371"
+    mode: 0755
   loop:
     - "{{ stack_volume_folder }}/data/logs"
     - "{{ stack_volume_folder }}/data/media"
@@ -45,6 +47,7 @@
     state: touch
     modification_time: preserve
     access_time: preserve
+    mode: 0644
   tags:
     - stackvolumes
 
@@ -56,6 +59,7 @@
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: 0600
+    backup: true
 
 - name: "Template Pretix.cfg"
   become: true

@@ -1,0 +1,34 @@
+---
+- name: "Set Stack Name"
+  ansible.builtin.set_fact:
+    stack_name: "php-base"
+
+- name: "Set Stack Folder"
+  ansible.builtin.set_fact:
+    stack_folder: "/opt/{{ stack_name }}"
+
+- name: "Set Stack Volume Folder"
+  ansible.builtin.set_fact:
+    stack_volume_folder: "/srv/{{ stack_name }}"
+
+- name: "Ensure Stack Folder exists"
+  become: true
+  ansible.builtin.file:
+    path: "{{ stack_folder }}/"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0755
+
+- name: "Clone Repo"
+  git:
+    repo: https://github.com/Mind-Hochschul-Netzwerk/php-base.git
+    dest: "{{ stack_folder }}"
+    version: "{{ php_base_branch }}"
+
+- name: Deploy Stack
+  community.general.make:
+    chdir: "{{ stack_folder }}"
+    target: image
+  tags:
+    - startstack

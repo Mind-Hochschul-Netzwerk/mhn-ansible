@@ -19,6 +19,15 @@
     owner: "{{ ansible_user }}"
     mode: 0755
 
+- name: "Ensure Stack Folder exists"
+  become: true
+  ansible.builtin.file:
+    path: "{{ stack_volume_folder }}/profilbilder"
+    state: directory
+    owner: "82"
+    group: "82"
+    mode: 0755
+
 - name: "Clone Repo"
   git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/referenten.git

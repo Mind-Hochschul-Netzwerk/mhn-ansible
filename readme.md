@@ -12,7 +12,7 @@ For local testing, you can use [Vagrant](https://www.vagrantup.com/) with [Ansib
 ```bash
 # Prerequisites:
 python3 -m pip install pipenv # Ensure Pipenv installed
-pipenv install # Install Python packages into Venv
+make workspace # Install Python packages into Venv
 # Usage:
 pipenv shell # Switch to Venv shell
 molecule converge # Will Create a local VM and provision everything against it
@@ -40,9 +40,9 @@ Here are some examples on how to run the playbook:
 make bootstrap # Refer to makefile for more make targets
 
 ## Custom Commands:
-ansible-playbook main.yml -i inventory.yml --extra-vars "ansible_sudo_pass=UserSudoPassword" # Run playbook and pass sudo password
-ansible-playbook main.yml -i inventory.yml --skip-tags "lockdown,startstack" # Run playbook skip certain parts of he Process
-ansible-playbook main.yml -i inventory.yml --tags "apt-upgrade,backup" # Run certain parts of he Playbook
+ansible-playbook play_main.yml -i inventory.yml --extra-vars "ansible_sudo_pass=UserSudoPassword" # Run playbook and pass sudo password
+ansible-playbook play_main.yml -i inventory.yml --skip-tags "lockdown,startstack" # Run playbook skip certain parts of he Process
+ansible-playbook play_main.yml -i inventory.yml --tags "apt-upgrade,backup" # Run certain parts of he Playbook
 ```
 
 ### Available Tags

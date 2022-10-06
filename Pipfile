@@ -12,6 +12,3 @@ python-vagrant = "*"
 
 [dev-packages]
 black = "*"
-
-[pipenv] # For Black
-allow_prereleases = true

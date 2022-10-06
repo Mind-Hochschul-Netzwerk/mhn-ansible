@@ -10,15 +10,14 @@
   become: true
   roles:
     # Base Roles:
-    - role: dockerbase
-      tags:
-        - base
+    - role: base
+      tags: ["base"]
     - role: lockdown
-      tags:
-        - lockdown
+      tags: ["lockdown"]
+    - role: geerlingguy.docker
+      tags: ["docker"]
     - role: borgbackup
-      tags:
-        - backup
+      tags: ["backup"]
 
 - name: Deploy Docker Stacks
   hosts: all

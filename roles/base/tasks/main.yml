@@ -1,0 +1,28 @@
+---
+- name: Set Hostname
+  ansible.builtin.include_tasks: hostname.yml
+
+- name: Set Hostname
+  ansible.builtin.include_tasks: basic-setup.yml
+
+- name: ensure Pip Packages installed
+  ansible.builtin.import_role:
+    name: geerlingguy.pip
+  vars:
+    pip_install_packages:
+      - name: docker
+      - name: docker-compose
+      - name: jsondiff
+      - name: pyyaml
+
+- name: Include Users
+  include_tasks: users.yml
+  when: deploy_users is defined
+  tags:
+    - users
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: reset ssh connection # To enforce group changes
+  meta: reset_connection

@@ -4,12 +4,12 @@
 # Ensure the facts are gathered now.
 
 - name: "gather facts"
-  setup:
+  ansible.builtin.setup:
     gather_subset: all
 
 - name: "create ansible user: {{ username }}"
-  become: true
-  user:
+  become: yes
+  ansible.builtin.user:
     name: "{{ username }}"
     create_home: yes
     state: present
@@ -17,37 +17,27 @@
   register: newuser
 
 - name: "Ensure .ssh directory"
-  file:
+  ansible.builtin.file:
     path: /home/{{ username }}/.ssh
     state: directory
     mode: 0700
     owner: "{{ username }}"
 
-- name: Check initial_user Authorized keys
-  stat:
-    path: /home/{{ ansible_user }}/.ssh/authorized_keys
-  register: initial_authorized_keys
-
-- name: Copy Authorized keys from initial_user
-  when: initial_authorized_keys.stat.exists
-  copy:
-    remote_src: yes
-    src: /home/{{ ansible_user }}/.ssh/authorized_keys
-    dest: /home/{{ username }}/.ssh/authorized_keys
+- name: Ensure Authorized Keys
+  become: yes
+  ansible.builtin.blockinfile:
+    path: "/home/{{ username }}/.ssh/authorized_keys"
+    block: "{{ ansible_user_pubkeys }}"
     owner: "{{ username }}"
     mode: 0600
-  notify: restart sshd
-
-- name: Seed Authorized Keys
-  authorized_key:
-    user: "{{ username }}"
-    key: "{{ ansible_user_pubkeys }}"
-    exclusive: yes
+    create: yes
+    marker: "<!-- {mark} ANSIBLE MANAGED SSH ansible_user_pubkeys -->"
   when: ansible_user_pubkeys is defined
   notify: restart sshd
 
 - name: "Allow sudo for user: {{ username }}"
-  copy:
+  become: yes
+  ansible.builtin.copy:
     content: "{{ username }} ALL=(ALL) NOPASSWD: ALL"
     dest: "/etc/sudoers.d/{{ username }}"
     mode: 0600

@@ -1,1 +1,3 @@
+initial_user: root
 remove_initial_user: false
+ansible_user_password_salt: mhnsalt

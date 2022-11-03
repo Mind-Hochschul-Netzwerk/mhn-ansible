@@ -2,14 +2,6 @@ log:
   level: {{ traefik_log_level }}
   filePath: "/var/log/traefik.log"
 
-accessLog:
-  filePath: "/var/log/accesslog.log"
-  filters:
-    retryAttempts: true
-    minDuration: "10ms"
-    statusCodes:
-      - "400-499"
-      - "500-599"
 api:
   dashboard: false
 

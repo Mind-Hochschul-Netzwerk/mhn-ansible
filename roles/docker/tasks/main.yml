@@ -1,0 +1,19 @@
+- name: Install Docker
+  become: yes
+  ansible.builtin.import_role:
+    name: geerlingguy.docker
+
+- name: Limit Docker Logs
+  become: yes
+  ansible.builtin.copy:
+    content: |
+            {
+              "log-driver": "json-file",
+              "log-opts": {
+                "max-size": "5m",
+                "max-file": "2"
+              }
+            }
+    dest: /etc/docker/daemon.json
+    owner: root
+    mode: 0644

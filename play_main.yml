@@ -7,14 +7,13 @@
 
 - name: Provision Servers
   hosts: all
-  become: true
   roles:
     # Base Roles:
     - role: base
       tags: ["base"]
     - role: lockdown
       tags: ["lockdown"]
-    - role: geerlingguy.docker
+    - role: docker
       tags: ["docker"]
     - role: borgbackup
       tags: ["backup"]
@@ -25,7 +24,8 @@
   roles:
     # Docker Stacks:
     - php-base
-    - traefik
+    - role: traefik
+      tags: ["traefik"]
     - mailu
     - ldap
     - moodle

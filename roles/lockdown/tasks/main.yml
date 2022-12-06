@@ -1,12 +1,15 @@
 ---
 - name: Lockdown SSH
   include_tasks: ssh_lockdown.yml
+  tags: ["ssh-lockdown"]
 
 - name: Lockdown UFW
   include_tasks: ufw_lockdown.yml
+  tags: ["ufw"]
 
 - name: Lockdown fail2ban
   include_tasks: fail2ban.yml
+  tags: ["fail2ban"]
 
 - name: flush handlers
   meta: flush_handlers

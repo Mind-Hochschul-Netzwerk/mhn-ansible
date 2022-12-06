@@ -4,6 +4,7 @@
   gather_facts: no
   roles:
     - initialuser # gather_facts must be disabled here to use this role
+  tags: ["init"]
 
 - name: Provision Servers
   hosts: all
@@ -13,8 +14,6 @@
       tags: ["base"]
     - role: lockdown
       tags: ["lockdown"]
-    - role: fail2ban
-      tags: ["fail2ban"]
     - role: docker
       tags: ["docker"]
     - role: borgbackup
@@ -28,14 +27,13 @@
     - php-base
     - role: traefik
       tags: ["traefik"]
-    - mailu
-    - ldap
-    - moodle
-    - mitglieder
-    - aufnahme
-    - pretix
-    - akademie
-    - referenten
-    - wiki
-  tags:
-    - dockerstacks
+    - role: mailu
+      tags: ["mailu"]
+    - role: ldap
+    - role: moodle
+    - role: mitglieder
+    - role: aufnahme
+    - role: pretix
+    - role: akademie
+    - role: referenten
+    - role: wiki

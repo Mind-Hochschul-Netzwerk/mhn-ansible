@@ -1,0 +1,63 @@
+- name: Front Filter
+  become: yes
+  ansible.builtin.blockinfile:
+    path: /etc/fail2ban/filter.d/mailu-bad-auth.conf
+    owner: root
+    group: root
+    create: true
+    mode: 0600
+    content: |
+      [Definition]
+      failregex = .* client login failed: .+ client:\ <HOST>
+      ignoreregex =
+      journalmatch = CONTAINER_TAG=mailu-front
+
+- name: Front Jail
+  become: yes
+  ansible.builtin.blockinfile:
+    path: /etc/fail2ban/jail.d/mailu-bad-auth.conf
+    owner: root
+    group: root
+    create: true
+    mode: 0600
+    content: |
+      [mailu-bad-auth]
+      enabled = true
+      backend = systemd
+      filter = mailu-bad-auth
+      bantime = 604800
+      findtime = 300
+      maxretry = 10
+      action = docker-action
+
+- name: admin Filter
+  become: yes
+  ansible.builtin.blockinfile:
+    path: /etc/fail2ban/filter.d/mailu-admin-bad-auth.conf
+    owner: root
+    group: root
+    create: true
+    mode: 0600
+    content: |
+      [Definition]
+      failregex = .* client login failed: .+ client:\ <HOST>
+      ignoreregex =
+      journalmatch = CONTAINER_TAG=mailu-admin-admin
+
+- name: admin Jail
+  become: yes
+  ansible.builtin.blockinfile:
+    path: /etc/fail2ban/jail.d/mailu-admin-bad-auth.conf
+    owner: root
+    group: root
+    create: true
+    mode: 0600
+    content: |
+      [mailu-admin-bad-auth]
+      enabled = true
+      backend = systemd
+      filter = mailu-admin-bad-auth
+      bantime = 604800
+      findtime = 300
+      maxretry = 10
+      action = docker-action

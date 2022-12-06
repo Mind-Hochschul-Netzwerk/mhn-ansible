@@ -7,13 +7,17 @@
   become: yes
   ansible.builtin.copy:
     content: |
-            {
-              "log-driver": "json-file",
-              "log-opts": {
-                "max-size": "5m",
-                "max-file": "2"
-              }
-            }
+      {
+        "log-driver": "json-file",
+        "log-opts": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      }
     dest: /etc/docker/daemon.json
     owner: root
     mode: 0644
+
+- name: Docker Fail2Ban
+  ansible.builtin.include_tasks: fail2ban.yml
+  tags: ["fail2ban"]

@@ -13,6 +13,8 @@
       tags: ["base"]
     - role: lockdown
       tags: ["lockdown"]
+    - role: fail2ban
+      tags: ["fail2ban"]
     - role: docker
       tags: ["docker"]
     - role: borgbackup

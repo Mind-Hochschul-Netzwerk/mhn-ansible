@@ -57,6 +57,10 @@
     group: "{{ ansible_user }}"
     mode: 0600
 
+- name: Configure Fail2Ban for mailu
+  ansible.builtin.include_tasks: fail2ban.yml
+  tags: ["fail2ban"]
+
 ## Deploy Stack
 - name: Deploy Stack
   community.general.make:

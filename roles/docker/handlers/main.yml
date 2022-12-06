@@ -1,0 +1,6 @@
+- name: Restart fail2ban
+  become: yes
+  systemd:
+    name: fail2ban.service
+    state: restarted
+    daemon_reload: true

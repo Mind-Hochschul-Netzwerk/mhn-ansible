@@ -1,5 +1,6 @@
 ---
 - name: "Add Users"
+  become: yes
   ansible.builtin.user:
     name: "{{ item.name }}"
     state: present
@@ -8,22 +9,24 @@
   loop: "{{ deploy_users }}"
   loop_control:
     label: "{{ item.name }}"
-  notify:
-    - restart ssh
 
-- name: Deploy Pubkey
-  ansible.posix.authorized_key:
-    user: "{{ item.name }}"
-    key: "{{ item.pubkey }}"
-    state: present
-    exclusive: true
+- name: Ensure Authorized Keys
+  become: yes
+  ansible.builtin.blockinfile:
+    path: "/home/{{ item.name }}/.ssh/authorized_keys"
+    block: "{{ item.pubkey }}"
+    owner: "{{ username }}"
+    mode: 0600
+    create: yes
+    marker: "<!-- {mark} ANSIBLE MANAGED SSH ansible_user_pubkeys -->"
+  when: ansible_user_pubkeys is defined
   loop: "{{ deploy_users }}"
   loop_control:
     label: "{{ item.name }}"
-  notify:
-    - restart ssh
+  notify: restart sshd
 
 - name: Allow specified Users to sudo
+  become: yes
   ansible.builtin.template:
     src: sudoers.j2
     dest: /etc/sudoers.d/sudoers

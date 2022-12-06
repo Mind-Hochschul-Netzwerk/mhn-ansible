@@ -1,5 +1,10 @@
 ---
-- name: restart ssh
+- name: restart sshd
   service:
     name: sshd
+    state: restarted
+
+- name: restart journald
+  service:
+    name: journald
     state: restarted

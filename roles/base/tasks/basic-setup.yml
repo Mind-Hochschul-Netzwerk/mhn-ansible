@@ -1,5 +1,4 @@
 ---
-
 - name: Set timezone
   community.general.timezone:
     name: "{{ time_zone }}"
@@ -27,6 +26,7 @@
     mode: 0755
 
 - name: Install Packages
+  become: yes
   ansible.builtin.package:
     name:
       - git

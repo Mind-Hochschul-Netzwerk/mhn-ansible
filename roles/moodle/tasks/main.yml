@@ -21,7 +21,7 @@
     mode: 0755
 
 - name: "Clone Repo"
-  git:
+  ansible.builtin.git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/moodle.git
     dest: "{{ stack_folder }}"
     version: "{{ moodle_branch }}"

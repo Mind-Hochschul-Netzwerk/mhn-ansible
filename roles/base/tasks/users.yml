@@ -23,7 +23,7 @@
   loop: "{{ deploy_users }}"
   loop_control:
     label: "{{ item.name }}"
-  notify: restart sshd
+  notify: Restart sshd
 
 - name: Allow specified Users to sudo
   become: yes

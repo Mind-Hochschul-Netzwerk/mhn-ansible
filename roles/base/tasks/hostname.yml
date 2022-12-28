@@ -1,12 +1,12 @@
 ---
-- name: updating hostname {{ hostname }} (1/2)
+- name: Updating hostname (1/2) {{ hostname }}
   when: hostname is defined
   become: yes
   ansible.builtin.hostname:
     name: "{{ hostname }}"
   notify: Reboot System
 
-- name: updating hostname {{ hostname }} (2/2)
+- name: Updating hostname (2/2) {{ hostname }}
   when: hostname is defined
   become: yes
   ansible.builtin.copy:
@@ -17,7 +17,7 @@
     owner: root
   notify: Reboot System
 
-- name: update /etc/hosts
+- name: Update /etc/hosts
   when: hostname is defined
   become: yes
   ansible.builtin.lineinfile:

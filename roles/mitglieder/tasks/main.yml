@@ -20,7 +20,7 @@
     mode: 0755
 
 - name: "Clone Repo"
-  git:
+  ansible.builtin.git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/mitglieder.git
     dest: "{{ stack_folder }}"
     version: "{{ mitglieder_branch }}"

@@ -24,7 +24,7 @@
     traefik_acme_dir: "{{ stack_volume_folder }}/acme/"
 
 - name: Clone Repo
-  git:
+  ansible.builtin.git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/traefik.git
     version: "{{ traefik_branch }}"
     dest: "{{ stack_folder }}"

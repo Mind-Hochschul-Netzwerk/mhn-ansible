@@ -5,7 +5,7 @@
 - name: Set Hostname
   ansible.builtin.include_tasks: basic-setup.yml
 
-- name: ensure Pip Packages installed
+- name: Ensure Pip Packages installed
   ansible.builtin.import_role:
     name: geerlingguy.pip
   vars:
@@ -16,13 +16,13 @@
       - name: pyyaml
 
 - name: Include Users
-  include_tasks: users.yml
+  ansible.builtin.include_tasks: users.yml
   when: deploy_users is defined
   tags:
     - users
 
 - name: Flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
-- name: reset ssh connection # To enforce group changes
-  meta: reset_connection
+- name: Reset ssh connection # To enforce group changes
+  ansible.builtin.meta: reset_connection

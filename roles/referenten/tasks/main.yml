@@ -29,7 +29,7 @@
     mode: 0755
 
 - name: "Clone Repo"
-  git:
+  ansible.builtin.git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/referenten.git
     dest: "{{ stack_folder }}"
     version: "{{ referenten_branch }}"

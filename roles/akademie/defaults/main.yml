@@ -1,4 +1,4 @@
 ---
 akademie_make_target: prod
 akademie_branch: main
-akademie_traefik_host_rule: "Host(`akademie.{{DOMAINNAME}}`)"
+akademie_traefik_host_rule: "Host(`akademie.{{ DOMAINNAME }}`)"

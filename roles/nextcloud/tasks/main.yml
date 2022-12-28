@@ -21,7 +21,7 @@
     mode: 0755
 
 - name: "Clone Repo"
-  git:
+  ansible.builtin.git:
     repo: git@github.com:Mind-Hochschul-Netzwerk/nextcloud.git
     dest: "{{ stack_folder }}"
     version: "{{ nextcloud_branch }}"

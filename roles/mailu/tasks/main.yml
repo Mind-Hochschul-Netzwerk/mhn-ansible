@@ -19,7 +19,7 @@
     mode: 0755
 
 - name: Clone Repo
-  git:
+  ansible.builtin.git:
     repo: https://github.com/Mind-Hochschul-Netzwerk/mailu.git
     dest: "{{ stack_folder }}"
     version: "{{ mailu_branch }}"
@@ -58,8 +58,10 @@
     mode: 0600
 
 - name: Configure Fail2Ban for mailu
-  ansible.builtin.include_tasks: fail2ban.yml
-  tags: ["fail2ban"]
+  ansible.builtin.include_tasks:
+    file: fail2ban.yml
+    apply:
+      tags: ["fail2ban"]
 
 ## Deploy Stack
 - name: Deploy Stack

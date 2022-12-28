@@ -3,7 +3,7 @@
   hosts: all
   gather_facts: no
   roles:
-    - initialuser # gather_facts must be disabled here to use this role
+    - joshkreud.initialuser # gather_facts must be disabled here to use this role
   tags: ["init"]
 
 - name: Provision Servers

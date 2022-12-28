@@ -1,6 +1,7 @@
 workspace:
 	echo Installing Ansible-Ansible Lint and so on into venv.
 	PIPENV_VENV_IN_PROJECT=1 pipenv install
+	ansible-galaxy install -r requirements.yml
 
 bootstrap:
 	ansible-playbook main.yml -i inventory.yml --skip-tags "startstack,backupcron"

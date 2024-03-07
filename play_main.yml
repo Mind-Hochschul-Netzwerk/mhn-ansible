@@ -10,7 +10,7 @@
   hosts: all
   roles:
     # Base Roles:
-    - role: base
+    - role: joshkreud.base
       tags: ["base"]
     - role: lockdown
       tags: ["lockdown"]
@@ -24,7 +24,7 @@
   become: no
   roles:
     # Docker Stacks:
-    - php-base
+    - role: php-base
     - role: traefik
       tags: ["traefik"]
     - role: mailu

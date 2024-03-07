@@ -25,7 +25,7 @@
 
 - name: Create a Fail2ban Service override directory
   become: yes
-  file:
+  ansible.builtin.file:
     owner: root
     group: root
     mode: 0755
@@ -34,7 +34,7 @@
 
 - name: Set up fail2ban.service override
   become: yes
-  ini_file:
+  community.general.ini_file:
     dest: /etc/systemd/system/fail2ban.service.d/docker_override.conf
     owner: root
     group: root

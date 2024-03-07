@@ -1,8 +1,13 @@
 roles:
   # Install a role from Ansible Galaxy.
-  - geerlingguy.docker
-  - geerlingguy.pip
-  - joshkreud.initialuser
+  - name: geerlingguy.docker
+    version: 7.1.0
+  - name: geerlingguy.pip
+    version: 3.0.2
+  - name: joshkreud.initialuser
+    version: 0.0.5
+  - name: joshkreud.base
+    version: 0.0.13
 
 collections:
   # Install a collection from Ansible Galaxy.

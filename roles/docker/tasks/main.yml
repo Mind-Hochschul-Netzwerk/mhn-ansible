@@ -1,3 +1,10 @@
+---
+- name: Install Apparmor
+  become: yes
+  ansible.builtin.apt:
+    name: apparmor
+    state: present
+
 - name: Install Docker
   become: yes
   ansible.builtin.import_role:
